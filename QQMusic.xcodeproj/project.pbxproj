@@ -1,0 +1,534 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		390EBE63EF9F0CE79FD15D84 /* Pods_QQMusic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCA1F6D6B3251A1C41530AC /* Pods_QQMusic.framework */; };
+		6A14C5A822EAA2BC006EF89F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C5A722EAA2BC006EF89F /* AppDelegate.swift */; };
+		6A14C5BA22EAB090006EF89F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A14C5B922EAB090006EF89F /* Assets.xcassets */; };
+		6A14C5BF22EAF076006EF89F /* MZCircleProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C5BD22EAF076006EF89F /* MZCircleProgress.swift */; };
+		6A14C5C022EAF076006EF89F /* MZNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C5BE22EAF076006EF89F /* MZNavigationController.swift */; };
+		6A14C5C222EAF089006EF89F /* MZMarqueeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C5C122EAF088006EF89F /* MZMarqueeLabel.swift */; };
+		6A14C5C422EAF0A4006EF89F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C5C322EAF0A4006EF89F /* Reachability.swift */; };
+		6A14C5C622EAF36A006EF89F /* MBProgressHUD+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C5C522EAF36A006EF89F /* MBProgressHUD+Extension.swift */; };
+		6A14C6D022EAF462006EF89F /* MusicLyricVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6CA22EAF462006EF89F /* MusicLyricVC.swift */; };
+		6A14C6D122EAF462006EF89F /* MusicPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6CB22EAF462006EF89F /* MusicPlayerVC.swift */; };
+		6A14C6D222EAF462006EF89F /* MusicTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6CC22EAF462006EF89F /* MusicTabbarController.swift */; };
+		6A14C6D322EAF462006EF89F /* MusicDownloadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6CD22EAF462006EF89F /* MusicDownloadVC.swift */; };
+		6A14C6D422EAF462006EF89F /* MusicTop100VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6CE22EAF462006EF89F /* MusicTop100VC.swift */; };
+		6A14C6DA22EAF495006EF89F /* MZDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6D622EAF495006EF89F /* MZDownloadManager.swift */; };
+		6A14C6DB22EAF495006EF89F /* MusicDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6D722EAF495006EF89F /* MusicDatabaseManager.swift */; };
+		6A14C6DC22EAF495006EF89F /* MZMusicPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6D822EAF495006EF89F /* MZMusicPlayerManager.swift */; };
+		6A14C6DD22EAF495006EF89F /* MZMusicAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6D922EAF495006EF89F /* MZMusicAPIRequest.swift */; };
+		6A14C6E522EAF4BB006EF89F /* MusicDownloadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6E022EAF4BB006EF89F /* MusicDownloadCell.swift */; };
+		6A14C6E622EAF4BB006EF89F /* MusicSubListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6E122EAF4BB006EF89F /* MusicSubListCell.swift */; };
+		6A14C6E722EAF4BB006EF89F /* MusicCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6E222EAF4BB006EF89F /* MusicCategoryCell.swift */; };
+		6A14C6E822EAF4BB006EF89F /* MusicLyricCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6E322EAF4BB006EF89F /* MusicLyricCell.swift */; };
+		6A14C6E922EAF4BB006EF89F /* NetworkMusicListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6E422EAF4BB006EF89F /* NetworkMusicListCell.swift */; };
+		6A14C6EB22EAF4CE006EF89F /* MusicItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6EA22EAF4CE006EF89F /* MusicItem.swift */; };
+		6A14C6ED22EAF5E5006EF89F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A14C6EC22EAF5E5006EF89F /* libsqlite3.tbd */; };
+		6A14C6EF22EAF5EB006EF89F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A14C6EE22EAF5EB006EF89F /* ImageIO.framework */; };
+		6A14C6F122EAF5F4006EF89F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A14C6F022EAF5F4006EF89F /* CoreMotion.framework */; };
+		6A14C6F322EAF77D006EF89F /* MZBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14C6F222EAF77D006EF89F /* MZBase.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2CCA1F6D6B3251A1C41530AC /* Pods_QQMusic.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QQMusic.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		32F1C49E92F32385E9390B4E /* Pods-QQMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QQMusic.debug.xcconfig"; path = "Target Support Files/Pods-QQMusic/Pods-QQMusic.debug.xcconfig"; sourceTree = "<group>"; };
+		6A14C5A422EAA2BB006EF89F /* QQMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QQMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A14C5A722EAA2BC006EF89F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6A14C5B322EAA2BF006EF89F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A14C5B922EAB090006EF89F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6A14C5BD22EAF076006EF89F /* MZCircleProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZCircleProgress.swift; sourceTree = "<group>"; };
+		6A14C5BE22EAF076006EF89F /* MZNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZNavigationController.swift; sourceTree = "<group>"; };
+		6A14C5C122EAF088006EF89F /* MZMarqueeLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZMarqueeLabel.swift; sourceTree = "<group>"; };
+		6A14C5C322EAF0A4006EF89F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		6A14C5C522EAF36A006EF89F /* MBProgressHUD+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MBProgressHUD+Extension.swift"; sourceTree = "<group>"; };
+		6A14C6CA22EAF462006EF89F /* MusicLyricVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicLyricVC.swift; sourceTree = "<group>"; };
+		6A14C6CB22EAF462006EF89F /* MusicPlayerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerVC.swift; sourceTree = "<group>"; };
+		6A14C6CC22EAF462006EF89F /* MusicTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicTabbarController.swift; sourceTree = "<group>"; };
+		6A14C6CD22EAF462006EF89F /* MusicDownloadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicDownloadVC.swift; sourceTree = "<group>"; };
+		6A14C6CE22EAF462006EF89F /* MusicTop100VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicTop100VC.swift; sourceTree = "<group>"; };
+		6A14C6D622EAF495006EF89F /* MZDownloadManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZDownloadManager.swift; sourceTree = "<group>"; };
+		6A14C6D722EAF495006EF89F /* MusicDatabaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicDatabaseManager.swift; sourceTree = "<group>"; };
+		6A14C6D822EAF495006EF89F /* MZMusicPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZMusicPlayerManager.swift; sourceTree = "<group>"; };
+		6A14C6D922EAF495006EF89F /* MZMusicAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZMusicAPIRequest.swift; sourceTree = "<group>"; };
+		6A14C6E022EAF4BB006EF89F /* MusicDownloadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicDownloadCell.swift; sourceTree = "<group>"; };
+		6A14C6E122EAF4BB006EF89F /* MusicSubListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSubListCell.swift; sourceTree = "<group>"; };
+		6A14C6E222EAF4BB006EF89F /* MusicCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicCategoryCell.swift; sourceTree = "<group>"; };
+		6A14C6E322EAF4BB006EF89F /* MusicLyricCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicLyricCell.swift; sourceTree = "<group>"; };
+		6A14C6E422EAF4BB006EF89F /* NetworkMusicListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMusicListCell.swift; sourceTree = "<group>"; };
+		6A14C6EA22EAF4CE006EF89F /* MusicItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicItem.swift; sourceTree = "<group>"; };
+		6A14C6EC22EAF5E5006EF89F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		6A14C6EE22EAF5EB006EF89F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		6A14C6F022EAF5F4006EF89F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		6A14C6F222EAF77D006EF89F /* MZBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MZBase.swift; sourceTree = "<group>"; };
+		E7089AEE5A1F0BDEDFF68FE6 /* Pods-QQMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QQMusic.release.xcconfig"; path = "Target Support Files/Pods-QQMusic/Pods-QQMusic.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6A14C5A122EAA2BB006EF89F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A14C6F122EAF5F4006EF89F /* CoreMotion.framework in Frameworks */,
+				6A14C6EF22EAF5EB006EF89F /* ImageIO.framework in Frameworks */,
+				6A14C6ED22EAF5E5006EF89F /* libsqlite3.tbd in Frameworks */,
+				390EBE63EF9F0CE79FD15D84 /* Pods_QQMusic.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		14681E408DA27ACA549CC447 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6F022EAF5F4006EF89F /* CoreMotion.framework */,
+				6A14C6EE22EAF5EB006EF89F /* ImageIO.framework */,
+				6A14C6EC22EAF5E5006EF89F /* libsqlite3.tbd */,
+				2CCA1F6D6B3251A1C41530AC /* Pods_QQMusic.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6A14C59B22EAA2BB006EF89F = {
+			isa = PBXGroup;
+			children = (
+				6A14C5A622EAA2BB006EF89F /* QQMusic */,
+				6A14C5A522EAA2BB006EF89F /* Products */,
+				EA28C63AD6C9C0B032AB70CF /* Pods */,
+				14681E408DA27ACA549CC447 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		6A14C5A522EAA2BB006EF89F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C5A422EAA2BB006EF89F /* QQMusic.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6A14C5A622EAA2BB006EF89F /* QQMusic */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6C822EAF442006EF89F /* MusicPlayer */,
+				6A14C5BC22EAF056006EF89F /* Thirdparty */,
+				6A14C5BB22EAB09D006EF89F /* Source */,
+				6A14C5A722EAA2BC006EF89F /* AppDelegate.swift */,
+				6A14C5B322EAA2BF006EF89F /* Info.plist */,
+			);
+			path = QQMusic;
+			sourceTree = "<group>";
+		};
+		6A14C5BB22EAB09D006EF89F /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C5B922EAB090006EF89F /* Assets.xcassets */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		6A14C5BC22EAF056006EF89F /* Thirdparty */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6F222EAF77D006EF89F /* MZBase.swift */,
+				6A14C5C522EAF36A006EF89F /* MBProgressHUD+Extension.swift */,
+				6A14C5C322EAF0A4006EF89F /* Reachability.swift */,
+				6A14C5BD22EAF076006EF89F /* MZCircleProgress.swift */,
+				6A14C5BE22EAF076006EF89F /* MZNavigationController.swift */,
+				6A14C5C122EAF088006EF89F /* MZMarqueeLabel.swift */,
+			);
+			path = Thirdparty;
+			sourceTree = "<group>";
+		};
+		6A14C6C822EAF442006EF89F /* MusicPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6DF22EAF4AC006EF89F /* Model */,
+				6A14C6DE22EAF4A6006EF89F /* View */,
+				6A14C6D522EAF480006EF89F /* Management */,
+				6A14C6CD22EAF462006EF89F /* MusicDownloadVC.swift */,
+				6A14C6CA22EAF462006EF89F /* MusicLyricVC.swift */,
+				6A14C6CB22EAF462006EF89F /* MusicPlayerVC.swift */,
+				6A14C6CC22EAF462006EF89F /* MusicTabbarController.swift */,
+				6A14C6CE22EAF462006EF89F /* MusicTop100VC.swift */,
+			);
+			path = MusicPlayer;
+			sourceTree = "<group>";
+		};
+		6A14C6D522EAF480006EF89F /* Management */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6D722EAF495006EF89F /* MusicDatabaseManager.swift */,
+				6A14C6D622EAF495006EF89F /* MZDownloadManager.swift */,
+				6A14C6D922EAF495006EF89F /* MZMusicAPIRequest.swift */,
+				6A14C6D822EAF495006EF89F /* MZMusicPlayerManager.swift */,
+			);
+			path = Management;
+			sourceTree = "<group>";
+		};
+		6A14C6DE22EAF4A6006EF89F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6E222EAF4BB006EF89F /* MusicCategoryCell.swift */,
+				6A14C6E022EAF4BB006EF89F /* MusicDownloadCell.swift */,
+				6A14C6E322EAF4BB006EF89F /* MusicLyricCell.swift */,
+				6A14C6E122EAF4BB006EF89F /* MusicSubListCell.swift */,
+				6A14C6E422EAF4BB006EF89F /* NetworkMusicListCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6A14C6DF22EAF4AC006EF89F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6A14C6EA22EAF4CE006EF89F /* MusicItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EA28C63AD6C9C0B032AB70CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				32F1C49E92F32385E9390B4E /* Pods-QQMusic.debug.xcconfig */,
+				E7089AEE5A1F0BDEDFF68FE6 /* Pods-QQMusic.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A14C5A322EAA2BB006EF89F /* QQMusic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A14C5B622EAA2BF006EF89F /* Build configuration list for PBXNativeTarget "QQMusic" */;
+			buildPhases = (
+				35781956E97A4353A538CDC6 /* [CP] Check Pods Manifest.lock */,
+				6A14C5A022EAA2BB006EF89F /* Sources */,
+				6A14C5A122EAA2BB006EF89F /* Frameworks */,
+				6A14C5A222EAA2BB006EF89F /* Resources */,
+				8EE9700265F10236FA086628 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QQMusic;
+			productName = QQMusic;
+			productReference = 6A14C5A422EAA2BB006EF89F /* QQMusic.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A14C59C22EAA2BB006EF89F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = com.mz;
+				TargetAttributes = {
+					6A14C5A322EAA2BB006EF89F = {
+						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 6A14C59F22EAA2BB006EF89F /* Build configuration list for PBXProject "QQMusic" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = 6A14C59B22EAA2BB006EF89F;
+			productRefGroup = 6A14C5A522EAA2BB006EF89F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A14C5A322EAA2BB006EF89F /* QQMusic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6A14C5A222EAA2BB006EF89F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A14C5BA22EAB090006EF89F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		35781956E97A4353A538CDC6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QQMusic-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8EE9700265F10236FA086628 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QQMusic/Pods-QQMusic-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QQMusic/Pods-QQMusic-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QQMusic/Pods-QQMusic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A14C5A022EAA2BB006EF89F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A14C6DD22EAF495006EF89F /* MZMusicAPIRequest.swift in Sources */,
+				6A14C6EB22EAF4CE006EF89F /* MusicItem.swift in Sources */,
+				6A14C6D222EAF462006EF89F /* MusicTabbarController.swift in Sources */,
+				6A14C6D322EAF462006EF89F /* MusicDownloadVC.swift in Sources */,
+				6A14C6D422EAF462006EF89F /* MusicTop100VC.swift in Sources */,
+				6A14C6F322EAF77D006EF89F /* MZBase.swift in Sources */,
+				6A14C5A822EAA2BC006EF89F /* AppDelegate.swift in Sources */,
+				6A14C6E922EAF4BB006EF89F /* NetworkMusicListCell.swift in Sources */,
+				6A14C6DC22EAF495006EF89F /* MZMusicPlayerManager.swift in Sources */,
+				6A14C6E622EAF4BB006EF89F /* MusicSubListCell.swift in Sources */,
+				6A14C6DA22EAF495006EF89F /* MZDownloadManager.swift in Sources */,
+				6A14C6D022EAF462006EF89F /* MusicLyricVC.swift in Sources */,
+				6A14C5C622EAF36A006EF89F /* MBProgressHUD+Extension.swift in Sources */,
+				6A14C6DB22EAF495006EF89F /* MusicDatabaseManager.swift in Sources */,
+				6A14C6E722EAF4BB006EF89F /* MusicCategoryCell.swift in Sources */,
+				6A14C6D122EAF462006EF89F /* MusicPlayerVC.swift in Sources */,
+				6A14C6E822EAF4BB006EF89F /* MusicLyricCell.swift in Sources */,
+				6A14C5C422EAF0A4006EF89F /* Reachability.swift in Sources */,
+				6A14C5C222EAF089006EF89F /* MZMarqueeLabel.swift in Sources */,
+				6A14C6E522EAF4BB006EF89F /* MusicDownloadCell.swift in Sources */,
+				6A14C5C022EAF076006EF89F /* MZNavigationController.swift in Sources */,
+				6A14C5BF22EAF076006EF89F /* MZCircleProgress.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		6A14C5B422EAA2BF006EF89F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6A14C5B522EAA2BF006EF89F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A14C5B722EAA2BF006EF89F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32F1C49E92F32385E9390B4E /* Pods-QQMusic.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8JD3VFVV9F;
+				INFOPLIST_FILE = QQMusic/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mz.QQMusic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		6A14C5B822EAA2BF006EF89F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7089AEE5A1F0BDEDFF68FE6 /* Pods-QQMusic.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8JD3VFVV9F;
+				INFOPLIST_FILE = QQMusic/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mz.QQMusic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A14C59F22EAA2BB006EF89F /* Build configuration list for PBXProject "QQMusic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A14C5B422EAA2BF006EF89F /* Debug */,
+				6A14C5B522EAA2BF006EF89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A14C5B622EAA2BF006EF89F /* Build configuration list for PBXNativeTarget "QQMusic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A14C5B722EAA2BF006EF89F /* Debug */,
+				6A14C5B822EAA2BF006EF89F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6A14C59C22EAA2BB006EF89F /* Project object */;
+}
