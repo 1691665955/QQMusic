@@ -20,7 +20,7 @@ class MusicDownloadCell: UITableViewCell {
         let fileName = self.downloadTask.url.lastPathComponent
         let arr = fileName.components(separatedBy: ".")
         let musicItem = MusicDatabaseManager.share.queryMusicDownload(songid: arr[0])
-        self.titleLB.text = musicItem.songname
+        self.titleLB.text = musicItem.name
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -116,7 +116,7 @@ class MusicDatabaseManager: NSObject {
         var isExist = false
         self.databaseQueue.inDatabase { (database) in
             let sql = "SELECT * FROM MUSICS WHERE \(self.song_id) = ?"
-            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.songid as Any])
+            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.id as Any])
             while (result?.next())! {
                 isExist = true
             }
@@ -136,7 +136,7 @@ class MusicDatabaseManager: NSObject {
             let date = NSDate.init()
             let time:TimeInterval = date.timeIntervalSince1970
             let time_Int = Int(time)
-            database.executeUpdate(sql, withArgumentsIn: [musicItem.songid as Any,modelData,time_Int,0])
+            database.executeUpdate(sql, withArgumentsIn: [musicItem.id as Any,modelData,time_Int,0])
         }
     }
 
@@ -147,7 +147,7 @@ class MusicDatabaseManager: NSObject {
             let date = NSDate.init()
             let time:TimeInterval = date.timeIntervalSince1970
             let time_Int = Int(time)
-            database.executeUpdate(sql, withArgumentsIn: [time_Int,musicItem.songid as Any])
+            database.executeUpdate(sql, withArgumentsIn: [time_Int,musicItem.id as Any])
         }
     }
 
@@ -189,7 +189,7 @@ class MusicDatabaseManager: NSObject {
         var isExist = false
         self.databaseQueue.inDatabase { (database) in
             let sql = "SELECT * FROM MUSICS WHERE \(self.song_id) = ? AND \(self.song_loveTime) > 0"
-            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.songid as Any])
+            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.id as Any])
             while (result?.next())! {
                 isExist = true
             }
@@ -210,7 +210,7 @@ class MusicDatabaseManager: NSObject {
             let date = NSDate.init()
             let time:TimeInterval = date.timeIntervalSince1970
             let time_Int = Int(time)
-            database.executeUpdate(sql, withArgumentsIn: [musicItem.songid as Any,modelData,0,time_Int])
+            database.executeUpdate(sql, withArgumentsIn: [musicItem.id as Any,modelData,0,time_Int])
         }
     }
     
@@ -226,11 +226,11 @@ class MusicDatabaseManager: NSObject {
             //如果记录为喜欢，则改为不喜欢
             
             let sql1 = "SELECT * FROM MUSICS WHERE \(self.song_id) = ? AND \(self.song_loveTime) > 0"
-            let result = self.database.executeQuery(sql1, withArgumentsIn: [musicItem.songid as Any])
+            let result = self.database.executeQuery(sql1, withArgumentsIn: [musicItem.id as Any])
             while (result?.next())! {
                 time_Int = 0
             }
-            database.executeUpdate(sql, withArgumentsIn: [time_Int,musicItem.songid as Any])
+            database.executeUpdate(sql, withArgumentsIn: [time_Int,musicItem.id as Any])
         }
     }
     
@@ -286,7 +286,7 @@ class MusicDatabaseManager: NSObject {
         var isExist = false
         self.downloadDBQueue.inDatabase { (database) in
             let sql = "SELECT * FROM MUSICS WHERE \(self.song_id) = ?"
-            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.songid as Any])
+            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.id as Any])
             while (result?.next())! {
                 isExist = true
             }
@@ -317,7 +317,7 @@ class MusicDatabaseManager: NSObject {
         var path = ""
         self.downloadDBQueue.inDatabase { (database) in
             let sql = "SELECT * FROM MUSICS WHERE \(self.song_id) = ? AND \(self.song_path) != ?"
-            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.songid as Any,""])
+            let result = database.executeQuery(sql, withArgumentsIn: [musicItem.id as Any,""])
             while (result?.next())! {
                 path = (result?.string(forColumn: "\(self.song_path)"))!
             }
@@ -331,7 +331,7 @@ class MusicDatabaseManager: NSObject {
         self.downloadDBQueue.inDatabase { (database) in
             let sql = "INSERT INTO MUSICS (\(self.song_id),\(self.song_model),\(self.song_lyric),\(self.song_path)) VALUES (?,?,?,?)"
             let modelData = NSKeyedArchiver.archivedData(withRootObject: musicItem)
-            database.executeUpdate(sql, withArgumentsIn: [musicItem.songid as Any,modelData,"",""])
+            database.executeUpdate(sql, withArgumentsIn: [musicItem.id as Any,modelData,"",""])
         }
     }
 
@@ -421,7 +421,7 @@ class MusicDatabaseManager: NSObject {
             try FileManager.default.removeItem(at: (documentUrl?.appendingPathComponent((URL.init(string: musicItem.url!)?.lastPathComponent)!))!)
             self.downloadDBQueue.inDatabase { (database) in
                 let sql = "DELETE FROM MUSICS WHERE  \(self.song_id) = ?"
-                database.executeUpdate(sql, withArgumentsIn: [musicItem.songid as Any])
+                database.executeUpdate(sql, withArgumentsIn: [musicItem.id as Any])
             }
         } catch {
             print("删除失败")

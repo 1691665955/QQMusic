@@ -91,7 +91,7 @@ class MusicDownloadVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
                 let item:DownloadTask = self.taskList.object(at: i) as! DownloadTask
                 let fileName = item.url.lastPathComponent
                 let arr = fileName.components(separatedBy: ".")
-                if arr[0] == musicItem?.songid {
+                if arr[0] == musicItem?.id {
                     self.tableView.selectRow(at: IndexPath.init(row: i, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
                     return
                 }

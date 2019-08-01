@@ -16,9 +16,9 @@ class MusicCategoryCell: UITableViewCell {
     var typeNameLB:UILabel!
     var musicList:NSArray!
     
-    var musicType:String!{
+    var musicType:Int!{
         didSet{
-            MZMusicAPIRequest.getHotMusicList(type: musicType) { (musiclist:[MusicItem]) in
+            MZMusicAPIRequest.getHotMusicList(id: musicType, pageSize: 3, page: 1, format: 1) { (musiclist:[MusicItem]) in
                 self.musicList = musiclist as NSArray
                 if musiclist.count == 0 {
                     return
@@ -28,17 +28,17 @@ class MusicCategoryCell: UITableViewCell {
                     let songNameLB = UILabel.init(frame: CGRect.init(x: 95.0, y: 80.0/3.0*CGFloat(i), width: 180.0, height: 80.0/3.0))
                     songNameLB.backgroundColor = UIColor.clear
                     songNameLB.font = UIFont.systemFont(ofSize: 15)
-                    let str = String.init(format: "%d %@ - %@", i+1,item.songname!,item.singername!)
+                    let str = String.init(format: "%d %@ - %@", i+1,item.name!,item.singer!)
                     
                     let att = NSMutableAttributedString.init(string: str)
-                    att.addAttributes([NSAttributedString.Key.foregroundColor:UIColor.black], range: NSRange.init(location: 0, length: item.songname.count+3))
-                    att.addAttributes([NSAttributedString.Key.foregroundColor:UIColor.gray], range: NSRange.init(location: item.songname.count+3, length: str.count-item.songname.count-3))
+                    att.addAttributes([NSAttributedString.Key.foregroundColor:UIColor.black], range: NSRange.init(location: 0, length: item.name.count+3))
+                    att.addAttributes([NSAttributedString.Key.foregroundColor:UIColor.gray], range: NSRange.init(location: item.name.count+3, length: str.count-item.name.count-3))
                     songNameLB.attributedText = att
                     
                     self.addSubview(songNameLB)
                     
                     if i == 0 {
-                        self.iconView.sd_setImage(with: URL.init(string: item.albumpic_small!), placeholderImage: UIImage.init(named: "QQListBack"))
+                        self.iconView.sd_setImage(with: URL.init(string: item.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
                     }
                 }
             }

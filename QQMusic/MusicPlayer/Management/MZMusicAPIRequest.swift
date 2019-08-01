@@ -14,59 +14,35 @@ import HandyJSON
 
 class MZMusicAPIRequest: NSObject {
     
-    //showAPI申请的appId
-    private let appId:String!
-    //showAPI申请的secret
-    private let secret:String!
-    //接口地址
-    private let url:String
-    
-    //请求实例，持有以实现取消操作
-    private var request:Request!
-    
-    //构造方法
-    @objc init(url:String,appId:String,secret:String){
-        self.appId=appId
-        self.secret=secret
-        self.url=url
-    }
-    
-    func post(parameters:[String:Any]?,callback:@escaping (NSDictionary)->Void) {
+    class func post(url:String!,parameters:[String:Any]?,callback:@escaping (AnyObject)->Void) {
         if parameters != nil {
-            Alamofire.request(self.url, parameters: self.createSecretParam(parameters: parameters))
-                .responseJSON { response in
-                    self.response(response: response, callback: callback)
+            if(url.hasPrefix("https://v1.itooi.cn/tencent/lrc")) {
+                Alamofire.request(url, parameters: parameters).responseData { (data) in
+                    let lyric = String.init(data: data.data ?? Data.init(), encoding: String.Encoding.utf8);
+                    print("url:\(url as Any)\nparams:\(parameters as Any)\nlyric:\(String(describing: lyric))");
+                    callback(lyric as AnyObject);
+                }
+            } else {
+                Alamofire.request(url, parameters: parameters)
+                    .responseJSON { response in
+                        print("url:\(url as Any)\nparams:\(parameters as Any)\nresponse:\(response)");
+                        self.response(response: response, callback: callback)
+                }
             }
         }
     }
     
-    private func createSecretParam(parameters:[String:Any]?) -> [String:Any] {
-        let formatter = DateFormatter.init()
-        formatter.dateFormat = "yyyyMMddHHmmss"
-        var re:[String:Any] = ["showapi_appid":self.appId!,
-                               "showapi_timestamp":formatter.string(from: Date.init()),
-                               "showapi_sign":self.secret!
-        ]
-        if parameters != nil {
-            for (key,value) in parameters! {
-                re[key] = value
-            }
-        }
-        return re
-    }
-    
-    private func response(response:DataResponse<Any>,callback:(NSDictionary)->Void){
+    class private func response(response:DataResponse<Any>,callback:(NSDictionary)->Void){
         if(response.result.isSuccess){
             callback(response.result.value as! NSDictionary)
-            
         }else{
             MBProgressHUD.showError(error: "网络异常");
             self.error(error: response.result.error.debugDescription,callback:callback)
         }
     }
     
-    private func error(error:String?=nil,callback:(NSDictionary)->Void){
-        let re:NSDictionary=["showapi_res_code":-1,"showapi_res_error":error!]
+    class private func error(error:String?=nil,callback:(NSDictionary)->Void){
+        let re:NSDictionary=["code":-1,"msg":error!]
         callback(re)
     }
 
@@ -87,62 +63,61 @@ class MZMusicAPIRequest: NSObject {
     }
     
     
-    //根据地区请求热门音乐
-    class func getHotMusicList(type:String,callback:@escaping ([MusicItem])->Void) {
+    
+    /// 排行榜
+    ///
+    /// - Parameters:
+    ///   - id: 排行榜ID 巅峰榜（4:流行指数榜 26:热歌榜 27:新歌榜）
+    ///         地区榜（5:内地榜 59:香港地区榜 61:台湾地区榜 3:欧美榜 16:韩国榜 17:日本榜）
+    ///         特色榜（60:抖音排行榜 28:网络歌曲榜 57:电音榜 29:影视金曲榜 52:腾讯音乐人原创榜 36:k歌金曲榜 58:说唱榜）
+    ///         全球榜（108:美国公告牌榜 123:美国iTunes榜 106:韩国Mnet榜 107:英国UK榜 105:日本公信榜 114:香港商台榜 126:JOOX本地热播榜 127:台湾KKBOX榜 128:YouTube音乐排行榜）
+    ///   - pageSize: 每页显示条数
+    ///   - page: 页码
+    ///   - format: 格式化数据 1:格式化 0:不格式化
+    ///   - callback: 接口回调
+    class func getHotMusicList(id:Int,pageSize:Int,page:Int,format:Int,callback:@escaping ([MusicItem])->Void) {
         //数据请求
-        let ApiRequest = MZMusicAPIRequest.init(url: "http://route.showapi.com/213-4", appId: "34762", secret: "c416cc2e238c41ab982bd9719fa0f420")
-        ApiRequest.post(parameters: ["topid":type]) { (dic:NSDictionary) in
-            if((dic.value(forKey: "showapi_res_code") as! Int) < 0) {
+        self.post(url:"https://v1.itooi.cn/tencent/topList",parameters: ["id":id,"format":format,"pageSize":pageSize,"page":page]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
                 callback([])
-                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let musicList:NSArray = dic.value(forKey: "data") as! NSArray
+                    let musicArr = [MusicItem].deserialize(from: musicList)
+                    callback(musicArr! as! [MusicItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
             }
-            let dic1:NSDictionary = dic.value(forKey: "showapi_res_body") as! NSDictionary
-            let dic2:NSDictionary = dic1.value(forKey: "pagebean") as! NSDictionary
-            let musicList:NSArray = dic2.value(forKey: "songlist") as! NSArray
-            let musicArr = [MusicItem].deserialize(from: musicList)
-            callback(musicArr! as! [MusicItem])
         }
     }
     
+    
+    
     //根据歌曲id查询歌词
-   class func getMusicLyric(musicID:String,callback:@escaping (String)->Void) {
-        let ApiRequest = MZMusicAPIRequest.init(url: "http://route.showapi.com/213-2", appId: "34762", secret: "c416cc2e238c41ab982bd9719fa0f420")
-        ApiRequest.post(parameters: ["musicid":musicID]) { (dic:NSDictionary) in
-            if((dic.value(forKey: "showapi_res_code") as! Int) < 0) {
-                callback("")
-                return
-            }
-            let dic1:NSDictionary = dic.value(forKey: "showapi_res_body") as! NSDictionary
-            var lyric:String? = dic1.value(forKey: "lyric") as? String
-            if(lyric == nil) {
-                lyric = ""
-            }
-            callback(lyric!)
+   class func getMusicLyric(id:String,callback:@escaping (String)->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/lrc",parameters: ["id":id]) { (string:AnyObject) in
+            callback(string as! String)
         }
     }
     
     //根据歌名，人名查询歌曲
-    class func searchMusicList(keyword:String,page:Int,callback:@escaping ([MusicItem])->Void) {
-        //数据请求
-        let ApiRequest = MZMusicAPIRequest.init(url: "http://route.showapi.com/213-1", appId: "34762", secret: "c416cc2e238c41ab982bd9719fa0f420")
-        ApiRequest.post(parameters: ["keyword":keyword,"page":"\(page)"]) { (dic:NSDictionary) in
-            if((dic.value(forKey: "showapi_res_code") as! Int) < 0) {
+    class func searchMusicList(keyword:String,type:String,pageSize:Int,page:Int,format:Int,callback:@escaping ([MusicItem])->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/search",parameters: ["keyword":keyword,"type":type,"pageSize":pageSize,"page":page,"format":format]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
                 callback([])
                 return
-            }
-            let dic1:NSDictionary = dic.value(forKey: "showapi_res_body") as! NSDictionary
-            let dic2:NSDictionary = dic1.value(forKey: "pagebean") as! NSDictionary
-            let musicList:NSArray = dic2.value(forKey: "contentlist") as! NSArray
-            let musicArr = [MusicItem].deserialize(from: musicList)
-            
-            var arr = [MusicItem]()
-            for musicItem in musicArr! {
-                if !(musicItem!.songname.contains("#") || musicItem!.singername.contains("#")) {
-                    arr.append(musicItem!)
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let musicList:NSArray = dic.value(forKey: "data") as! NSArray
+                    let musicArr = [MusicItem].deserialize(from: musicList)
+                    callback(musicArr! as! [MusicItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
                 }
             }
-            callback(arr)
         }
     }
-    
 }

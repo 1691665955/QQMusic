@@ -16,48 +16,38 @@ import HandyJSON
     
     var musicLyricTimes:NSMutableArray?
     var musicLyricLyrics:NSMutableArray?
-    var songid:String!
-    var albumpic_big:String!
-    var singerid:String?
-    var downUrl:String!
-    var url:String?
-    var singername:String!
-    var albumpic_small:String?
-    var songname:String!
-    var m4a:String?{
-        didSet{
-            if m4a != nil {
-                self.url = m4a
-            }
-        }
-    }
+    
+    var singer:String!
+    var name:String!
+    var id:String!
+    var time:Int!
+    var pic:String!
+    var lrc:String!
+    var url:String!
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(musicLyricTimes, forKey: "musicLyricTimes")
         aCoder.encode(musicLyricLyrics, forKey: "musicLyricLyrics")
-        aCoder.encode(songid, forKey: "songid")
-        aCoder.encode(albumpic_big, forKey: "albumpic_big")
-        aCoder.encode(downUrl, forKey: "downUrl")
-        aCoder.encode(singerid, forKey: "singerid")
+        aCoder.encode(singer, forKey: "singer")
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(id, forKey: "id")
+        aCoder.encode(time, forKey: "time")
+        aCoder.encode(pic, forKey: "pic")
+        aCoder.encode(lrc, forKey: "lrc")
         aCoder.encode(url, forKey: "url")
-        aCoder.encode(singername, forKey: "singername")
-        aCoder.encode(albumpic_small, forKey: "albumpic_small")
-        aCoder.encode(songname, forKey: "songname")
-        aCoder.encode(m4a, forKey: "m4a")
     }
     
     required init?(coder aDecoder: NSCoder) {
+        super.init()
         musicLyricTimes = aDecoder.decodeObject(forKey: "musicLyricTimes") as? NSMutableArray
         musicLyricLyrics = aDecoder.decodeObject(forKey: "musicLyricLyrics") as? NSMutableArray
-        songid = (aDecoder.decodeObject(forKey: "songid") as! String)
-        albumpic_big = (aDecoder.decodeObject(forKey: "albumpic_big") as! String)
-        downUrl = (aDecoder.decodeObject(forKey: "downUrl") as! String)
-        singerid = aDecoder.decodeObject(forKey: "singerid") as? String
+        singer = (aDecoder.decodeObject(forKey: "singer") as! String)
+        name = (aDecoder.decodeObject(forKey: "name") as! String)
+        id = (aDecoder.decodeObject(forKey: "id") as! String)
+        time = aDecoder.decodeObject(forKey: "time") as? Int
+        pic = aDecoder.decodeObject(forKey: "pic") as? String
+        lrc = (aDecoder.decodeObject(forKey: "lrc") as! String)
         url = aDecoder.decodeObject(forKey: "url") as? String
-        singername = (aDecoder.decodeObject(forKey: "singername") as! String)
-        albumpic_small = aDecoder.decodeObject(forKey: "albumpic_small") as? String
-        songname = (aDecoder.decodeObject(forKey: "songname") as! String)
-        m4a = aDecoder.decodeObject(forKey: "m4a") as? String
     }
 }
 

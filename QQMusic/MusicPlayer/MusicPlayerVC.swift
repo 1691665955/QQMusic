@@ -101,7 +101,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
             self.networkMusicTable.reloadData()
         })
     
-        self.networkMusicTypes = ["26","5","6","3","17"]
+        self.networkMusicTypes = [26,5,6,3,17]
         self.networkMusicTypeNames = ["热歌榜","内地榜","港台榜","欧美榜","日本榜"]
         
         /****************************************上面为网络音乐**************************************************/
@@ -168,7 +168,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
     //搜索框文字更新
     func updateSearchResults(for searchController: UISearchController) {
         self.searchText = searchController.searchBar.text
-        MZMusicAPIRequest.searchMusicList(keyword: self.searchText, page: 1, callback: { (musicList) in
+        MZMusicAPIRequest.searchMusicList(keyword: self.searchText, type: "song", pageSize: 20, page: 1, format: 1) { (musicList) in
             self.searchResultArray = NSMutableArray.init(array: musicList)
             if self.searchResultArray.count>0 {
                 let bgView = self.searchController.view.viewWithTag(100)
@@ -176,7 +176,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
             }
             self.searchResultVC.musicList = self.searchResultArray
             self.searchResultVC.tableView.reloadData()
-        })
+        }
         
         if self.searchText.count == 0{
             let bgView = self.searchController.view.viewWithTag(100)
@@ -269,7 +269,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
         self.searchResultArray = NSMutableArray.init()
         self.searchResultVC = MusicTop100VC()
         self.searchResultVC.refreshData = { page in
-            MZMusicAPIRequest.searchMusicList(keyword: self.searchText, page: page, callback: { (musicList) in
+            MZMusicAPIRequest.searchMusicList(keyword: self.searchText, type: "song", pageSize: 20, page: page, format: 1) { (musicList) in
                 for item in musicList {
                     self.searchResultArray.add(item)
                 }
@@ -285,7 +285,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
                 }
                 self.searchResultVC.musicList = self.searchResultArray
                 self.searchResultVC.tableView.reloadData()
-            })
+            }
         }
         self.searchResultVC.isSearch = true
         self.searchResultVC.musicList = self.searchResultArray
@@ -365,7 +365,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
         if cell==nil {
             cell = MusicCategoryCell.init(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "category")
         }
-        cell.musicType = self.networkMusicTypes.object(at: indexPath.row) as? String
+        cell.musicType = self.networkMusicTypes.object(at: indexPath.row) as? Int
         cell.musicTypeName = self.networkMusicTypeNames.object(at: indexPath.row) as? String
         return cell!
     }
