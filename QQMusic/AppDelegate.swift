@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import IQKeyboardManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,12 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.frame = UIScreen.main.bounds
         self.window?.makeKeyAndVisible()
         
-        let musicPlayerVC = MusicPlayerVC()
-        let nav = MZNavigationController()
-        nav.addChild(musicPlayerVC);
         let tabVC = MusicTabbarController()
-        tabVC.addChild(nav)
         self.window?.rootViewController = tabVC
+        
+        IQKeyboardManager.shared().shouldResignOnTouchOutside = true;
+        IQKeyboardManager.shared().isEnableAutoToolbar = false;
         
         UIApplication.shared.beginReceivingRemoteControlEvents()
         

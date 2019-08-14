@@ -95,19 +95,124 @@ class MZMusicAPIRequest: NSObject {
     
     
     
-    //根据歌曲id查询歌词
+   /// 根据歌曲id查询歌词
+   ///
+   /// - Parameters:
+   ///   - id: 歌曲ID
+   ///   - callback: 接口回调
    class func getMusicLyric(id:String,callback:@escaping (String)->Void) {
         self.post(url:"https://v1.itooi.cn/tencent/lrc",parameters: ["id":id]) { (string:AnyObject) in
             callback(string as! String)
         }
     }
     
-    //根据歌名，人名查询歌曲
+    
+    /// 根据歌名，人名查询歌曲
+    ///
+    /// - Parameters:
+    ///   - keyword: g搜索关键字
+    ///   - type: 搜索类型
+    ///   - pageSize: 每页显示的数量
+    ///   - page: 页码
+    ///   - format: 格式化数据 1:格式化 0:不格式化
+    ///   - callback: 接口回调
     class func searchMusicList(keyword:String,type:String,pageSize:Int,page:Int,format:Int,callback:@escaping ([MusicItem])->Void) {
         self.post(url:"https://v1.itooi.cn/tencent/search",parameters: ["keyword":keyword,"type":type,"pageSize":pageSize,"page":page,"format":format]) { (dic:AnyObject) in
             if((dic.value(forKey: "code") as! Int) < 0) {
                 callback([])
                 return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let musicList:NSArray = dic.value(forKey: "data") as! NSArray
+                    let musicArr = [MusicItem].deserialize(from: musicList)
+                    callback(musicArr! as! [MusicItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    
+    /// 首页广告栏
+    ///
+    /// - Parameter callback: 接口回调
+    class func banner(callback:@escaping ([BannerItem])->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/banner",parameters: [:]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let bannerList:NSArray = dic.value(forKey: "data") as! NSArray
+                    let bannerArr = [BannerItem].deserialize(from: bannerList)
+                    callback(bannerArr! as! [BannerItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    /// 热门歌单
+    ///
+    /// - Parameters:
+    ///   - categoryID: 分类ID
+    ///   - sortId: 排序ID
+    ///   - pageSize: 每页显示的数量
+    ///   - page: 页码
+    ///   - callback: 接口回调
+    class func getHotSongList(categoryID:Int,sortId:Int,pageSize:Int,page:Int,callback:@escaping ([SongListItem])->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/songList/hot",parameters: ["categoryId":categoryID,"sortId":sortId,"pageSize":pageSize,"page":page]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data = dic.value(forKey: "data") as! NSDictionary;
+                    let songList:NSArray = data.value(forKey: "list") as! NSArray
+                    let songListArr = [SongListItem].deserialize(from: songList)
+                    callback(songListArr! as! [SongListItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    /// 热门 MV
+    ///
+    /// - Parameters:
+    ///   - order: 0:按播放量排序 1:默认排序
+    ///   - pageSize: 每页显示的数量
+    ///   - page: 页码
+    ///   - callback: 接口回调
+    class func getHotMVList(order:Int,pageSize:Int,page:Int,callback:@escaping ([MVItem])->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/mv/hot",parameters: ["order":order,"pageSize":pageSize,"page":page]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data = dic.value(forKey: "data") as! NSDictionary;
+                    let mvList:NSArray = data.value(forKey: "list") as! NSArray
+                    let mvListArr = [MVItem].deserialize(from: mvList)
+                    callback(mvListArr! as! [MVItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    class func getSongListDetail(id:String,callback:@escaping ([MusicItem])->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/songList",parameters: ["id":id,"format":1]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
             } else {
                 if((dic.value(forKey: "code") as! Int) == 200) {
                     let musicList:NSArray = dic.value(forKey: "data") as! NSArray

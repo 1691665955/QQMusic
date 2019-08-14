@@ -12,5 +12,6 @@ target 'QQMusic' do
   pod 'MBProgressHUD'
   pod "HandyJSON"
   pod "FMDB"
+  pod "MZExtension/Extends/MZBannerView"
 
 end

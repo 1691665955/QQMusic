@@ -8,6 +8,7 @@
 
 import UIKit
 import MBProgressHUD
+import MZExtension
 
 class MusicDownloadVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
 

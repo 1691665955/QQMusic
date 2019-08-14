@@ -13,13 +13,20 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
     
     var playBtn:UIButton!
     var iconView:UIImageView!
-//    var musicNameLB:UILabel!
     var musicNameLB:MZMarqueeLabel!
     var musicAuthorLB:UILabel!
     var circleView:MZCircleProgress!
     var musicList:NSArray!
     
     var playerView:UIView!
+    
+    override func viewDidLayoutSubviews() {
+        for view in self.tabBar.subviews {
+            if view.isKind(of: NSClassFromString("UITabBarButton")!) {
+                view.removeFromSuperview();
+            }
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -94,9 +101,14 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let playerView:UIView = UIView.init(frame: CGRect.init(x: 0, y: SCREEN_HEIGHT-49, width: SCREEN_WIDTH, height: 49))
+        let musicPlayerVC = MusicMainVC()
+        let nav = MZNavigationController()
+        nav.addChild(musicPlayerVC);
+        self.addChild(nav);
+        
+        let playerView:UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: Tabbar_Height))
         playerView.backgroundColor = UIColor.init(red: 244/255.0, green: 244.0/255.0, blue: 244.0/255.0, alpha: 1)
-        self.view.addSubview(playerView)
+        self.tabBar.addSubview(playerView)
         playerView.isUserInteractionEnabled = true
         self.playerView = playerView
         
@@ -130,7 +142,7 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
         
         
         let btn3:UIButton = UIButton.init(type: UIButton.ButtonType.custom)
-        btn3.frame = CGRect.init(x: 270, y: 10, width: 30, height: 30)
+        btn3.frame = CGRect.init(x: SCREEN_WIDTH-80, y: 10, width: 30, height: 30)
         btn3.setBackgroundImage(UIImage.init(named: "player_btn_play_normal"), for: UIControl.State.normal)
         btn3.setBackgroundImage(UIImage.init(named: "player_btn_pause_normal"), for: UIControl.State.selected)
         btn3.addTarget(self, action:#selector(musicPlayOrPause(sender:)), for: UIControl.Event.touchUpInside)
@@ -138,6 +150,12 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
         self.playBtn = btn3
         
         self.addCircleView()
+        
+        let btn4:UIButton = UIButton.init(type: UIButton.ButtonType.custom)
+        btn4.frame = CGRect.init(x: SCREEN_WIDTH-40, y: 10, width: 30, height: 30)
+        btn4.setBackgroundImage(UIImage.init(named: "player_list"), for: UIControl.State.normal)
+        btn4.addTarget(self, action:#selector(showPlayerList), for: UIControl.Event.touchUpInside)
+        playerView.addSubview(btn4)
         
         let currentTime = UserDefaults.standard.string(forKey: "currentTime")
         let playIndex = UserDefaults.standard.integer(forKey: "playIndex")
@@ -161,11 +179,11 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
             self.circleView = nil
         }
         
-        let circleView = MZCircleProgress.init(frame: CGRect.init(x: 270, y: 10, width: 30, height: 30))
+        let circleView = MZCircleProgress.init(frame: CGRect.init(x: SCREEN_WIDTH-80, y: 10, width: 30, height: 30))
         circleView.backLineColor = UIColor.clear
-        circleView.backLineWidth = 3
+        circleView.backLineWidth = 2
         circleView.progressLineColor = MainColor
-        circleView.progressLineWidth = 3
+        circleView.progressLineWidth = 2
         circleView.backgroundColor = UIColor.clear
         playerView.insertSubview(circleView, belowSubview: self.playBtn)
         self.circleView = circleView
@@ -259,6 +277,9 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
         self.updateMusicListTable()
     }
 
+    @objc func showPlayerList() {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

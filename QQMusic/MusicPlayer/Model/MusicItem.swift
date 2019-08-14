@@ -25,6 +25,7 @@ import HandyJSON
     var lrc:String!
     var url:String!
     
+    
     func encode(with aCoder: NSCoder) {
         aCoder.encode(musicLyricTimes, forKey: "musicLyricTimes")
         aCoder.encode(musicLyricLyrics, forKey: "musicLyricLyrics")

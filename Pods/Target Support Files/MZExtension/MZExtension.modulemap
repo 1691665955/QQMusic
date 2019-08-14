@@ -1,0 +1,6 @@
+framework module MZExtension {
+  umbrella header "MZExtension-umbrella.h"
+
+  export *
+  module * { export * }
+}
