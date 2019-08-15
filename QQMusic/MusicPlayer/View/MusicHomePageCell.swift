@@ -21,14 +21,14 @@ class MusicHomePageCell: UITableViewCell {
             switch type {
             case 0:
                 self.categoryNameLB.text = "热门歌曲";
-                MZMusicAPIRequest.getHotMusicList(id: 26, pageSize: 3, page: 1, format: 1) { (musiclist:[MusicItem]) in
+                MZMusicAPIRequest.getHotMusicList(id: 26, pageSize: 3, page: 1, format: 0) { (musiclist:[MusicItem]) in
                     self.list = musiclist;
                     for i in 0...2{
                         let musicItem = musiclist[i];
                         let iconView = self.iconViewList[i];
-                        iconView.sd_setImage(with: URL.init(string: musicItem.pic), completed: nil);
+                        iconView.sd_setImage(with: URL.init(string: musicItem.getAblumUrl()), completed: nil);
                         let nameLB = self.nameLBList[i];
-                        nameLB.text = musicItem.name + "-" + musicItem.singer;
+                        nameLB.text = musicItem.title + "-" + musicItem.getSingerName();
                         let listenCountLB = self.listenCountList[i];
                         listenCountLB.isHidden = true;
                         let listenIcon = self.listenCountView[i];
@@ -67,19 +67,19 @@ class MusicHomePageCell: UITableViewCell {
                     for i in 0...2{
                         let mvItem = mvList[i];
                         let iconView = self.iconViewList[i];
-                        iconView.sd_setImage(with: URL.init(string: mvItem.picurl), completed: nil);
+                        iconView.sd_setImage(with: URL.init(string: mvItem.picurl!), completed: nil);
                         let nameLB = self.nameLBList[i];
                         nameLB.text = mvItem.title;
                         let listenCountLB = self.listenCountList[i];
                         listenCountLB.isHidden = false;
-                        listenCountLB.text = String(mvItem.playcnt);
+                        listenCountLB.text = String(mvItem.playcnt!);
                         let listenIcon = self.listenCountView[i];
                         listenIcon.isHidden = false;
-                        if (mvItem.playcnt >= 10000) {
-                            listenCountLB.text = String(format: "%.1f万", CGFloat(mvItem.playcnt)/10000.0);
+                        if (mvItem.playcnt! >= 10000) {
+                            listenCountLB.text = String(format: "%.1f万", CGFloat(mvItem.playcnt!)/10000.0);
                         }
-                        if (mvItem.playcnt >= 100000000) {
-                            listenCountLB.text = String(format: "%.1f亿", CGFloat(mvItem.playcnt)/100000000.0);
+                        if (mvItem.playcnt! >= 100000000) {
+                            listenCountLB.text = String(format: "%.1f亿", CGFloat(mvItem.playcnt!)/100000000.0);
                         }
                     }
                 }

@@ -138,16 +138,16 @@ class MZMusicPlayerManager: NSObject {
         databaseManager.insertHistoryMusic(musicItem: item)
         
         //本地歌词
-        let lyric = databaseManager.queryLyric(songid: item.id)
+        let lyric = databaseManager.queryLyric(songid: item.mid)
         if lyric.count>10 {
             self.analyzeLyric(lyric: lyric)
         } else {
             //获取网络歌词
-            MZMusicAPIRequest.getMusicLyric(id: item.id) { (lyric) in
+            MZMusicAPIRequest.getMusicLyric(id: item.mid) { (lyric) in
                 if lyric != "" {
                     self.analyzeLyric(lyric: lyric)
                     if databaseManager.queryMusicDownload(musicItem: item) {
-                        databaseManager.insertMusicLyric(songid: item.id, lyric: lyric)
+                        databaseManager.insertMusicLyric(songid: item.mid, lyric: lyric)
                     }
                 }
             }
@@ -158,7 +158,7 @@ class MZMusicPlayerManager: NSObject {
             self.playerItem = AVPlayerItem.init(url: URL.init(fileURLWithPath:path))
         } else {
             //网络音乐
-            self.playerItem = AVPlayerItem.init(url: URL.init(string: item.url!)!)
+            self.playerItem = AVPlayerItem.init(url: URL.init(string: item.getUrl())!)
         }
 
         
@@ -184,7 +184,8 @@ class MZMusicPlayerManager: NSObject {
         var arr = lyric.components(separatedBy: CharacterSet.init(charactersIn: "[]"))
         for i in stride(from: 11, to: arr.count, by: 2) {
             let timeString:String = arr[i]
-            let lyric:String = arr[i+1].replacingOccurrences(of: "\n", with: "");
+            var lyric:String = arr[i+1].replacingOccurrences(of: "\n", with: "");
+            lyric = lyric.replacingOccurrences(of: "\r", with: "")
             let timeArray = timeString.components(separatedBy: ":")
             let minute = Double(timeArray[0])!;
             let second = Double(timeArray[1])!;
@@ -291,14 +292,14 @@ class MZMusicPlayerManager: NSObject {
             if (backGround as! String) == "1"{
                 var info = [String:NSObject]()
                 let item:MusicItem = self.playerItemList.object(at: self.playIndex) as! MusicItem
-                info.updateValue(item.name as NSObject, forKey:MPMediaItemPropertyTitle)
+                info.updateValue(item.title as NSObject, forKey:MPMediaItemPropertyTitle)
                 info.updateValue(item.singer as NSObject, forKey:MPMediaItemPropertyArtist)
                 info.updateValue(self.currentTime as NSObject, forKey: MPNowPlayingInfoPropertyElapsedPlaybackTime)
                 info.updateValue(self.durationTime as NSObject, forKey: MPMediaItemPropertyPlaybackDuration)
                 info.updateValue("\(self.musicPlayer.rate)" as NSObject, forKey: MPNowPlayingInfoPropertyPlaybackRate)
                 if self.musicItem.musicLyricLyrics == nil {
                     let imageView = UIImageView.init()
-                    imageView.sd_setImage(with: URL.init(string: self.musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"), options: SDWebImageOptions.retryFailed, completed: { (loadImage, error, cacheType, url) in
+                    imageView.sd_setImage(with: URL.init(string: self.musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"), options: SDWebImageOptions.retryFailed, completed: { (loadImage, error, cacheType, url) in
                         if loadImage != nil {
                             info.updateValue(MPMediaItemArtwork.init(image: loadImage!), forKey: MPMediaItemPropertyArtwork)
                             MPNowPlayingInfoCenter.default().nowPlayingInfo = info
@@ -346,7 +347,7 @@ class MZMusicPlayerManager: NSObject {
                     if self.imageView == nil {
                         self.imageView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 240*3, height: 240*3))
                     }
-                    self.imageView.sd_setImage(with: URL.init(string: self.musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"), options: SDWebImageOptions.retryFailed) { (loadImage, error, cacheType, url) in
+                    self.imageView.sd_setImage(with: URL.init(string: self.musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"), options: SDWebImageOptions.retryFailed) { (loadImage, error, cacheType, url) in
                         if self.imageView.subviews.count == 0 {
                             self.imageView.addSubview(self.label)
                         }

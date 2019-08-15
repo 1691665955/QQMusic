@@ -14,8 +14,8 @@ class NetworkMusicListCell: UITableViewCell {
 
     var musicItem:MusicItem!{
         didSet{
-            self.titleLB.text = musicItem.name
-            self.authorLB.text = musicItem.singer
+            self.titleLB.text = musicItem.title
+            self.authorLB.text = musicItem.getSingerName()
             self.loveBtn.isSelected = MusicDatabaseManager.share.queryLoveMusic(musicItem: musicItem)
             self.downloadBtn.isSelected = MusicDatabaseManager.share.queryMusicDownload(musicItem: musicItem)
         }
@@ -91,25 +91,25 @@ class NetworkMusicListCell: UITableViewCell {
         } else {
             sender.isSelected = !sender.isSelected
             //下载歌曲
-            MZDownloadManager.sharedInstance.newTask(url: self.musicItem.url!)
+            MZDownloadManager.sharedInstance.newTask(url: self.musicItem.getUrl())
             MusicDatabaseManager.share.insertDownloadMusic(musicItem: self.musicItem)
 
             //下载歌词
-            MZMusicAPIRequest.getMusicLyric(id: self.musicItem.id, callback: { (lyric) in
-                MusicDatabaseManager.share.insertMusicLyric(songid: self.musicItem.id, lyric: lyric)
+            MZMusicAPIRequest.getMusicLyric(id: self.musicItem.mid, callback: { (lyric) in
+                MusicDatabaseManager.share.insertMusicLyric(songid: self.musicItem.mid, lyric: lyric)
             })
             //下载大图片
-            SDWebImageDownloader.shared.downloadImage(with: URL.init(string: self.musicItem.pic), options: SDWebImageDownloaderOptions.continueInBackground, progress: { (receivedSize, expectedSize, url) in
+            SDWebImageDownloader.shared.downloadImage(with: URL.init(string: self.musicItem.getAblumUrl()), options: SDWebImageDownloaderOptions.continueInBackground, progress: { (receivedSize, expectedSize, url) in
                 
                 }, completed: { (image, imgData, error, finished) in
                     if imgData != nil {
-                        MusicDatabaseManager.share.insertLargeAlbumImageData(songid: self.musicItem.id, imgData: imgData!)
+                        MusicDatabaseManager.share.insertLargeAlbumImageData(songid: self.musicItem.mid, imgData: imgData!)
                         //下载小图片
-                        SDWebImageDownloader.shared.downloadImage(with: URL.init(string: self.musicItem.pic!), options: SDWebImageDownloaderOptions.continueInBackground, progress: { (receivedSize, expectedSize, url) in
+                        SDWebImageDownloader.shared.downloadImage(with: URL.init(string: self.musicItem.getAblumUrl()), options: SDWebImageDownloaderOptions.continueInBackground, progress: { (receivedSize, expectedSize, url) in
                             
                             }, completed: { (image, imgData, error, finished) in
                                 if imgData != nil {
-                                    MusicDatabaseManager.share.insertSmallAlbumImageData(songid: self.musicItem.id, imgData: imgData!)
+                                    MusicDatabaseManager.share.insertSmallAlbumImageData(songid: self.musicItem.mid, imgData: imgData!)
                                 }
                         })
                     }

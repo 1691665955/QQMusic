@@ -23,7 +23,7 @@ class MZNavigationController: UINavigationController,UINavigationControllerDeleg
         bar.barTintColor = UIColor.white
         bar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.black]
         
-        self.initUI(navigationBar: bar);
+        self.initUI(navigationBar: self.navigationBar);
     }
     
     func initUI(navigationBar:UINavigationBar) -> Void {

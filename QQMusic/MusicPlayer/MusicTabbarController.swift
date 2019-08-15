@@ -34,14 +34,14 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
         manager.delegate = self
         if manager.musicItem != nil {
             let item:MusicItem = manager.musicItem
-            let imgData = MusicDatabaseManager.share.querySmallAlbumImage(songid: item.id)
+            let imgData = MusicDatabaseManager.share.querySmallAlbumImage(songid: item.mid)
             if imgData != nil {
                 self.iconView.image = UIImage.init(data: imgData!)
             } else {
-                self.iconView.sd_setImage(with: URL.init(string: item.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
+                self.iconView.sd_setImage(with: URL.init(string: item.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"))
             }
-            self.musicNameLB.setBackgroundColr(backgroundColr: UIColor.clear, text: manager.musicItem.name, font: UIFont.systemFont(ofSize: 16), textColor: MainColor,textAlignment:NSTextAlignment.left)
-            self.musicAuthorLB.text = manager.musicItem.singer
+            self.musicNameLB.setBackgroundColr(backgroundColr: UIColor.clear, text: item.title, font: UIFont.systemFont(ofSize: 16), textColor: MainColor,textAlignment:NSTextAlignment.left)
+            self.musicAuthorLB.text = item.getSingerName()
             if manager.musicPlayer.rate>0 {
                 self.iconView.layer.removeAllAnimations()
                 let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
@@ -69,7 +69,7 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
                     if topVC.musicList != nil && manager.playerItemList != nil {
                         for i in 0..<topVC.musicList.count {
                             let item:MusicItem = topVC.musicList.object(at: i) as! MusicItem
-                            if item.id == musicItem?.id {
+                            if item.mid == musicItem?.mid {
                                 topVC.tableView.selectRow(at: IndexPath.init(row: i, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
                                 return
                             }
@@ -85,7 +85,7 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
                             let task:DownloadTask = downloadVC.taskList.object(at: i) as! DownloadTask
                             let fileName = task.url.lastPathComponent
                             let arr = fileName.components(separatedBy: ".")
-                            if arr[0] == musicItem?.id {
+                            if arr[0] == musicItem?.mid {
                                 downloadVC.tableView.selectRow(at: IndexPath.init(row: i, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
                                 return
                             }
@@ -191,7 +191,7 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
     
     @objc func showLyricView() {
         let vc = MusicLyricVC()
-        let nav:MZNavigationController = MZNavigationController()
+        let nav:UINavigationController = UINavigationController()
         nav.addChild(vc)
         self.present(nav, animated: true, completion: nil)
     }
@@ -264,15 +264,15 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
     }
     
     func playMusic(musicItem: MusicItem) {
-        self.musicAuthorLB.text = musicItem.singer
+        self.musicAuthorLB.text = musicItem.getSingerName()
         self.addCircleView()
-        self.musicNameLB.setBackgroundColr(backgroundColr: UIColor.clear, text: musicItem.name, font: UIFont.systemFont(ofSize: 16), textColor: MainColor,textAlignment:NSTextAlignment.left)
+        self.musicNameLB.setBackgroundColr(backgroundColr: UIColor.clear, text: musicItem.title, font: UIFont.systemFont(ofSize: 16), textColor: MainColor,textAlignment:NSTextAlignment.left)
         
-        let imgData = MusicDatabaseManager.share.querySmallAlbumImage(songid: musicItem.id)
+        let imgData = MusicDatabaseManager.share.querySmallAlbumImage(songid: musicItem.mid)
         if imgData != nil {
             self.iconView.image = UIImage.init(data: imgData!)
         } else {
-            self.iconView.sd_setImage(with: URL.init(string: musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
+            self.iconView.sd_setImage(with: URL.init(string: musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"))
         }
         self.updateMusicListTable()
     }

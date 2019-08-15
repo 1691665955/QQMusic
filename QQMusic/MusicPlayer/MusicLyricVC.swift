@@ -56,7 +56,7 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         self.titleLB = MZMarqueeLabel.init(frame: CGRect.init(x: 0, y: 10, width: 200, height: 24))
         titleBGView.addSubview(self.titleLB)
         self.navigationController?.navigationBar.addSubview(titleBGView)
-        self.titleLB.setBackgroundColr(backgroundColr: UIColor.clear, text: self.musicItem.name, font: UIFont.systemFont(ofSize: 18), textColor: UIColor.white,textAlignment:NSTextAlignment.center)
+        self.titleLB.setBackgroundColr(backgroundColr: UIColor.clear, text: self.musicItem.title, font: UIFont.systemFont(ofSize: 18), textColor: UIColor.white,textAlignment:NSTextAlignment.center)
         
         self.bgView = UIImageView.init(frame: self.view.bounds)
         self.view.addSubview(self.bgView)
@@ -171,20 +171,20 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         scrollView.addSubview(albumView)
 
         self.authorLB = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 30))
-        self.authorLB.text = self.musicItem.singer
+        self.authorLB.text = self.musicItem.getSingerName()
         self.authorLB.backgroundColor = UIColor.clear
         self.authorLB.textAlignment = NSTextAlignment.center
         self.authorLB.textColor = UIColor.white
         albumView.addSubview(self.authorLB)
         
         self.albumImageView = UIImageView.init(frame: CGRect.init(x: 50, y: 40, width: SCREEN_WIDTH-100, height: SCREEN_WIDTH-100))
-        let imgData = MusicDatabaseManager.share.queryLargeAlbumImage(songid: musicItem.id)
+        let imgData = MusicDatabaseManager.share.queryLargeAlbumImage(songid: musicItem.mid)
         if imgData != nil {
             self.albumImageView.image = UIImage.init(data: imgData!)
             self.bgView.image = UIImage.init(data: imgData!)
         } else {
-            self.albumImageView.sd_setImage(with: URL.init(string: musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
-            self.bgView.sd_setImage(with: URL.init(string: musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
+            self.albumImageView.sd_setImage(with: URL.init(string: musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"))
+            self.bgView.sd_setImage(with: URL.init(string: musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"))
         }
         self.albumImageView.layer.cornerRadius = (SCREEN_WIDTH-100)*0.5
         self.albumImageView.layer.masksToBounds = true
@@ -416,18 +416,18 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         self.noLyricLB1.isHidden = true
         self.noLyricLB2.isHidden = true
         
-        self.titleLB.setBackgroundColr(backgroundColr: UIColor.clear, text: musicItem.name, font: UIFont.systemFont(ofSize: 20), textColor: UIColor.white,textAlignment:NSTextAlignment.center)
+        self.titleLB.setBackgroundColr(backgroundColr: UIColor.clear, text: musicItem.title, font: UIFont.systemFont(ofSize: 20), textColor: UIColor.white,textAlignment:NSTextAlignment.center)
         
-        let imgData = MusicDatabaseManager.share.queryLargeAlbumImage(songid: musicItem.id)
+        let imgData = MusicDatabaseManager.share.queryLargeAlbumImage(songid: musicItem.mid)
         if imgData != nil {
             self.albumImageView.image = UIImage.init(data: imgData!)
             self.bgView.image = UIImage.init(data: imgData!)
         } else {
-            self.albumImageView.sd_setImage(with: URL.init(string: musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
-            self.bgView.sd_setImage(with: URL.init(string: musicItem.pic!), placeholderImage: UIImage.init(named: "QQListBack"))
+            self.albumImageView.sd_setImage(with: URL.init(string: musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"))
+            self.bgView.sd_setImage(with: URL.init(string: musicItem.getAblumUrl()), placeholderImage: UIImage.init(named: "QQListBack"))
         }
         
-        self.authorLB.text = musicItem.singer
+        self.authorLB.text = musicItem.getSingerName()
         self.musicItem = musicItem
         self.tableView.reloadData()
         self.subLyricTableView.reloadData()

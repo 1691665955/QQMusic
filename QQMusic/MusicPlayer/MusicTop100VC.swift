@@ -78,7 +78,7 @@ class MusicTop100VC: UIViewController,UITableViewDelegate,UITableViewDataSource,
         let musicItem = manager.musicItem
         for i in 0..<self.musicList.count {
             let item:MusicItem = self.musicList.object(at: i) as! MusicItem
-            if item.id == musicItem?.id {
+            if item.mid == musicItem?.mid {
                 self.tableView.selectRow(at: IndexPath.init(row: i, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
                 return
             }

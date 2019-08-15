@@ -12,7 +12,7 @@ class MusicSubListCell: UITableViewCell {
 
     var musicItem:MusicItem!{
         didSet{
-        self.titleLB.text = String.init(format: "%@ - %@", arguments: [musicItem.name!,musicItem.singer!])
+            self.titleLB.text = String.init(format: "%@ - %@", arguments: [musicItem.title!,musicItem.getSingerName()])
         }
     }
     var titleLB:UILabel!

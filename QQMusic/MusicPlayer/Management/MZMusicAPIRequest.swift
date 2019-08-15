@@ -209,18 +209,18 @@ class MZMusicAPIRequest: NSObject {
         }
     }
     
-    class func getSongListDetail(id:String,callback:@escaping ([MusicItem])->Void) {
-        self.post(url:"https://v1.itooi.cn/tencent/songList",parameters: ["id":id,"format":1]) { (dic:AnyObject) in
+    class func getSongListDetail(id:String,callback:@escaping (SongListDetail?)->Void) {
+        self.post(url:"https://v1.itooi.cn/tencent/songList",parameters: ["id":id,"format":0]) { (dic:AnyObject) in
             if((dic.value(forKey: "code") as! Int) < 0) {
-                callback([])
+                callback(nil)
             } else {
                 if((dic.value(forKey: "code") as! Int) == 200) {
-                    let musicList:NSArray = dic.value(forKey: "data") as! NSArray
-                    let musicArr = [MusicItem].deserialize(from: musicList)
-                    callback(musicArr! as! [MusicItem])
+                    let data:NSArray = dic.value(forKey: "data") as! NSArray
+                    let songListDetail = SongListDetail.deserialize(from: data[0] as? NSDictionary)
+                    callback(songListDetail!)
                 } else {
                     MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
-                    callback([])
+                    callback(nil)
                 }
             }
         }

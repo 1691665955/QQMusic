@@ -144,7 +144,6 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
             case 1:
                 let vc = MusicSongListVC.init();
                 vc.songListItem = (cell.list[index] as! SongListItem);
-                vc.hidesBottomBarWhenPushed = true;
                 self.navigationController?.pushViewController(vc, animated: true);
                 break;
             case 2:
