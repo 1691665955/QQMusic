@@ -168,7 +168,7 @@ class MusicPlayerVC: UIViewController,UITableViewDelegate,UITableViewDataSource,
     //搜索框文字更新
     func updateSearchResults(for searchController: UISearchController) {
         self.searchText = searchController.searchBar.text
-        MZMusicAPIRequest.searchMusicList(keyword: self.searchText, type: "song", pageSize: 20, page: 1, format: 0) { (musicList) in
+        MZMusicAPIRequest.searchMusicList(keyword: self.searchText, type: "song", pageSize: 20, page: 0, format: 0) { (musicList) in
             self.searchResultArray = NSMutableArray.init(array: musicList)
             if self.searchResultArray.count>0 {
                 let bgView = self.searchController.view.viewWithTag(100)

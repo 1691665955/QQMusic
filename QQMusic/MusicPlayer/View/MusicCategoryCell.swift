@@ -18,7 +18,7 @@ class MusicCategoryCell: UITableViewCell {
     
     var musicType:Int!{
         didSet{
-            MZMusicAPIRequest.getHotMusicList(id: musicType, pageSize: 3, page: 1, format: 0) { (musiclist:[MusicItem]) in
+            MZMusicAPIRequest.getHotMusicList(id: musicType, pageSize: 3, page: 0, format: 0) { (musiclist:[MusicItem]) in
                 self.musicList = musiclist as NSArray
                 if musiclist.count == 0 {
                     return

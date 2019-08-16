@@ -43,17 +43,18 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
         tableView.delegate = self;
         tableView.separatorStyle = .none;
         tableView.register(MusicHomePageCell.classForCoder(), forCellReuseIdentifier: "MusicHomePageCell");
+        tableView.showsVerticalScrollIndicator = false;
         self.contentView.addSubview(tableView);
         self.homeTableView = tableView;
         
         let SCALE = SCREEN_WIDTH/375;
         
         let tableHeaderView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH/690*276+20+70*SCALE+20));
-        
+        tableHeaderView.isUserInteractionEnabled = true;
         self.bannerView = MZBannerView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH/690*276));
         self.bannerView.delegate = self;
         self.bannerView.tintColor = UIColor.white;
-        self.bannerView.normalColor = RGB(r: 223, g: 223, b: 223);
+        self.bannerView.normalColor = RGB(r: 136, g: 136, b: 136);
         tableHeaderView.addSubview(self.bannerView);
         
         
@@ -63,6 +64,11 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
         
         for i in 0...3 {
             let itemView = UIView.init(frame: CGRect.init(x: itemWidth*CGFloat(i), y: SCREEN_WIDTH/690*276+20, width: itemWidth, height: 80*SCALE));
+            itemView.isUserInteractionEnabled = true;
+            itemView.tag = 200+i;
+            let tap = UITapGestureRecognizer.init(target: self, action: #selector(itemTap));
+            itemView.addGestureRecognizer(tap);
+            
             let iconView = UIImageView.init(frame: CGRect.init(x: (itemWidth-40*SCALE)/2, y: 0, width: 40*SCALE, height: 40*SCALE));
             iconView.image = UIImage.init(named: iconNames[i]);
             itemView.addSubview(iconView);
@@ -76,6 +82,27 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
         }
         
         tableView.tableHeaderView = tableHeaderView;
+    }
+    
+    @objc func itemTap(tap:UITapGestureRecognizer) -> Void {
+        switch tap.view!.tag-200 {
+        case 0:
+            //歌手
+            break;
+        case 1:
+            //排行
+            let vc = MusicRankingCategoryVC.init();
+            self.navigationController?.pushViewController(vc, animated: true);
+            break;
+        case 2:
+            //歌单
+            break;
+        case 3:
+            //MV
+            break;
+        default:
+            break;
+        }
     }
     
     //初始化个人中心
@@ -152,12 +179,29 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
                 break;
             }
         }
+        cell.moreTapCallback = {
+            switch indexPath.row {
+            case 0:
+                let vc = MusicRankingListVC.init();
+                vc.rankingTitle = "热门歌曲";
+                vc.rankingID = 27;
+                self.navigationController?.pushViewController(vc, animated: true);
+                break;
+            case 1:
+                
+                break;
+            case 2:
+                break;
+            default:
+                break;
+            }
+        }
         return cell;
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let SCALE = SCREEN_WIDTH/375;
-        return 95*SCALE+80;
+        let itemHeight = (SCREEN_WIDTH-24-20)/3;
+        return itemHeight+80;
     }
     
 }

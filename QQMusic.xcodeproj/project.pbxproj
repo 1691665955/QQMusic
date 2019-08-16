@@ -44,6 +44,10 @@
 		6A8A35DA2303FA4A00CDFDB6 /* SongListDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A8A35D92303FA4A00CDFDB6 /* SongListDetail.swift */; };
 		6ADF3A322304E789002E9FC1 /* MusicSongListIntroduceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF3A312304E789002E9FC1 /* MusicSongListIntroduceVC.swift */; };
 		6ADF3A342304FA57002E9FC1 /* MusicListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF3A332304FA57002E9FC1 /* MusicListCell.swift */; };
+		6ADF3A3623064B5D002E9FC1 /* MusicRankingCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF3A3523064B5C002E9FC1 /* MusicRankingCategoryVC.swift */; };
+		6ADF3A3823064C76002E9FC1 /* MusicRankingCategoryTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF3A3723064C76002E9FC1 /* MusicRankingCategoryTopCell.swift */; };
+		6ADF3A3A23065D42002E9FC1 /* MusicRankingCategoryOtherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF3A3923065D42002E9FC1 /* MusicRankingCategoryOtherCell.swift */; };
+		6ADF3A3C230684D2002E9FC1 /* MusicRankingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF3A3B230684D2002E9FC1 /* MusicRankingListVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +91,10 @@
 		6A8A35D92303FA4A00CDFDB6 /* SongListDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListDetail.swift; sourceTree = "<group>"; };
 		6ADF3A312304E789002E9FC1 /* MusicSongListIntroduceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSongListIntroduceVC.swift; sourceTree = "<group>"; };
 		6ADF3A332304FA57002E9FC1 /* MusicListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicListCell.swift; sourceTree = "<group>"; };
+		6ADF3A3523064B5C002E9FC1 /* MusicRankingCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRankingCategoryVC.swift; sourceTree = "<group>"; };
+		6ADF3A3723064C76002E9FC1 /* MusicRankingCategoryTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRankingCategoryTopCell.swift; sourceTree = "<group>"; };
+		6ADF3A3923065D42002E9FC1 /* MusicRankingCategoryOtherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRankingCategoryOtherCell.swift; sourceTree = "<group>"; };
+		6ADF3A3B230684D2002E9FC1 /* MusicRankingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRankingListVC.swift; sourceTree = "<group>"; };
 		E7089AEE5A1F0BDEDFF68FE6 /* Pods-QQMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QQMusic.release.xcconfig"; path = "Target Support Files/Pods-QQMusic/Pods-QQMusic.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,6 +187,8 @@
 				6A14C6CC22EAF462006EF89F /* MusicTabbarController.swift */,
 				6A14C6CE22EAF462006EF89F /* MusicTop100VC.swift */,
 				6A8A35C922F6EFF000CDFDB6 /* MusicMainVC.swift */,
+				6ADF3A3523064B5C002E9FC1 /* MusicRankingCategoryVC.swift */,
+				6ADF3A3B230684D2002E9FC1 /* MusicRankingListVC.swift */,
 				6A8A35D52303AF3500CDFDB6 /* MusicSongListVC.swift */,
 				6ADF3A312304E789002E9FC1 /* MusicSongListIntroduceVC.swift */,
 				6A8A35CD230262A000CDFDB6 /* MusicWebVC.swift */,
@@ -207,6 +217,8 @@
 				6A14C6E422EAF4BB006EF89F /* NetworkMusicListCell.swift */,
 				6A8A35CF2302AB8A00CDFDB6 /* MusicHomePageCell.swift */,
 				6ADF3A332304FA57002E9FC1 /* MusicListCell.swift */,
+				6ADF3A3723064C76002E9FC1 /* MusicRankingCategoryTopCell.swift */,
+				6ADF3A3923065D42002E9FC1 /* MusicRankingCategoryOtherCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -364,10 +376,13 @@
 				6A8A35D42303A11700CDFDB6 /* MVItem.swift in Sources */,
 				6ADF3A342304FA57002E9FC1 /* MusicListCell.swift in Sources */,
 				6A14C6DC22EAF495006EF89F /* MZMusicPlayerManager.swift in Sources */,
+				6ADF3A3623064B5D002E9FC1 /* MusicRankingCategoryVC.swift in Sources */,
 				6A14C6E622EAF4BB006EF89F /* MusicSubListCell.swift in Sources */,
 				6A14C6DA22EAF495006EF89F /* MZDownloadManager.swift in Sources */,
 				6A8A35D2230393F700CDFDB6 /* SongListItem.swift in Sources */,
 				6A14C6D022EAF462006EF89F /* MusicLyricVC.swift in Sources */,
+				6ADF3A3823064C76002E9FC1 /* MusicRankingCategoryTopCell.swift in Sources */,
+				6ADF3A3C230684D2002E9FC1 /* MusicRankingListVC.swift in Sources */,
 				6A14C5C622EAF36A006EF89F /* MBProgressHUD+Extension.swift in Sources */,
 				6A14C6DB22EAF495006EF89F /* MusicDatabaseManager.swift in Sources */,
 				6A8A35D62303AF3500CDFDB6 /* MusicSongListVC.swift in Sources */,
@@ -381,6 +396,7 @@
 				6A14C5C222EAF089006EF89F /* MZMarqueeLabel.swift in Sources */,
 				6A14C6E522EAF4BB006EF89F /* MusicDownloadCell.swift in Sources */,
 				6A14C5C022EAF076006EF89F /* MZNavigationController.swift in Sources */,
+				6ADF3A3A23065D42002E9FC1 /* MusicRankingCategoryOtherCell.swift in Sources */,
 				6A14C5BF22EAF076006EF89F /* MZCircleProgress.swift in Sources */,
 				6A8A35D02302AB8A00CDFDB6 /* MusicHomePageCell.swift in Sources */,
 			);

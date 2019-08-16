@@ -24,6 +24,8 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         self.title = "歌单";
         self.view.backgroundColor = .white;
         
+        NotificationCenter.default.addObserver(self, selector: #selector(skipMusic), name: Notification.Name.init(rawValue: "SkipMusic"), object: nil);
+        
         let bgView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT/2));
         bgView.contentMode = .scaleAspectFill;
         bgView.clipsToBounds = true;
@@ -65,6 +67,7 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
                     self.visitnumLB.text = String(format: "收听数：%.1f亿", CGFloat(self.model.visitnum)/100000000.0);
                 }
                 self.descLB.text = "简介："+self.model.desc;
+                self.skipMusic();
             }
         }
     }
@@ -151,6 +154,23 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
+    }
+    
+    
+    @objc func skipMusic() -> Void {
+        let manager = MZMusicPlayerManager.shareManager
+        let musicItem = manager.musicItem
+        for i in 0..<self.model.songlist.count {
+            let item:MusicItem = self.model.songlist[i] 
+            if item.mid == musicItem?.mid {
+                self.tableView.selectRow(at: IndexPath.init(row: i, section: 0), animated: false, scrollPosition: UITableView.ScrollPosition.none)
+                return
+            }
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self);
     }
 
 }

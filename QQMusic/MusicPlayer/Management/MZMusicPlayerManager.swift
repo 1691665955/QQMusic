@@ -166,6 +166,9 @@ class MZMusicPlayerManager: NSObject {
         self.musicPlayer.volume = 1;
         self.musicPlayer.play()
         
+        //发送切歌通知
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "SkipMusic"), object: nil, userInfo: nil);
+        
         self.currentItemAddObserver()
         
         if self.delegate?.playMusic != nil {

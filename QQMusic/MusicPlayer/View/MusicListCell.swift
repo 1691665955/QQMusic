@@ -17,7 +17,16 @@ class MusicListCell: UITableViewCell {
     var musicItem:MusicItem! {
         didSet {
             self.nameLB.text = musicItem.title;
-            self.singerLB.text = musicItem.getSingerName();
+            self.singerLB.text = musicItem.getSingerName()+" - "+musicItem.album.name;
+            if musicItem.mv.vid!.count == 0 {
+                self.mvBtn.isHidden = true;
+                self.nameLB.frame = CGRect.init(x: 50, y: 10, width: SCREEN_WIDTH-50-40, height: 20);
+                self.singerLB.frame = CGRect.init(x: 50, y: 30, width: SCREEN_WIDTH-50-40, height: 16);
+            } else {
+                self.mvBtn.isHidden = false;
+                self.nameLB.frame = CGRect.init(x: 50, y: 10, width: SCREEN_WIDTH-50-80, height: 20);
+                self.singerLB.frame = CGRect.init(x: 50, y: 30, width: SCREEN_WIDTH-50-80, height: 16);
+            }
         }
     }
     var index:Int! {
