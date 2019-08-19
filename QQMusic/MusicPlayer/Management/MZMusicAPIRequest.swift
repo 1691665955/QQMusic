@@ -209,6 +209,11 @@ class MZMusicAPIRequest: NSObject {
         }
     }
     
+    /// 获取歌单详情
+    ///
+    /// - Parameters:
+    ///   - id: 歌单ID
+    ///   - callback: 接口回调
     class func getSongListDetail(id:String,callback:@escaping (SongListDetail?)->Void) {
         self.post(url:"https://v1.itooi.cn/tencent/songList",parameters: ["id":id,"format":0]) { (dic:AnyObject) in
             if((dic.value(forKey: "code") as! Int) < 0) {
@@ -218,6 +223,45 @@ class MZMusicAPIRequest: NSObject {
                     let data:NSArray = dic.value(forKey: "data") as! NSArray
                     let songListDetail = SongListDetail.deserialize(from: data[0] as? NSDictionary)
                     callback(songListDetail!)
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback(nil)
+                }
+            }
+        }
+    }
+    
+    
+    /// 获取歌单分类
+    ///
+    /// - Parameter callback: 接口回调
+    class func getSongListCategory(callback:@escaping ([SongListCategoryGroupItem])->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/songList/category",parameters: [:]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let categoryList:NSArray = dic.value(forKey: "data") as! NSArray
+                    let categoryArr = [SongListCategoryGroupItem].deserialize(from: categoryList)
+                    callback(categoryArr! as! [SongListCategoryGroupItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    class func getMVDetail(id:String,callback:@escaping (MVDetail?)->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/mv",parameters: ["id":id]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback(nil)
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data:NSDictionary = dic.value(forKey: "data") as! NSDictionary
+                    let detail = MVDetail.deserialize(from: data.value(forKey: id) as? NSDictionary)
+                    callback(detail)
                 } else {
                     MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
                     callback(nil)

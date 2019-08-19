@@ -84,7 +84,7 @@ class MusicSongListIntroduceVC: UIViewController {
         descLB.textColor = .white;
         descLB.font = .systemFont(ofSize: 12*SCALE);
         descLB.numberOfLines = 0;
-        descLB.text = self.model.desc;
+        descLB.text = self.model.desc.htmlText();
         let maxSize1 = CGSize.init(width: SCREEN_WIDTH-28*SCALE, height: CGFloat.greatestFiniteMagnitude);
         let size1 = descLB.sizeThatFits(maxSize1);
         var frame = descLB.frame;
@@ -94,6 +94,4 @@ class MusicSongListIntroduceVC: UIViewController {
         
         scrollView.contentSize = CGSize.init(width: 0, height: descLB.frame.maxY+20*SCALE);
     }
-    
-
 }

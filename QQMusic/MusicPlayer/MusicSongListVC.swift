@@ -13,6 +13,7 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
     var tableView:UITableView!
     var songListItem:SongListItem!
     var model:SongListDetail!
+    var logoView:UIImageView!
     var creatorIconView:UIImageView!
     var creatorNameLB:UILabel!
     var songnumLB:UILabel!
@@ -30,6 +31,7 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         bgView.contentMode = .scaleAspectFill;
         bgView.clipsToBounds = true;
         bgView.sd_setImage(with: URL.init(string: self.songListItem.imgurl), completed: nil);
+        bgView.isHidden = true;
         self.view.addSubview(bgView);
         
         //创建背景毛玻璃效果
@@ -54,6 +56,8 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         
         MZMusicAPIRequest.getSongListDetail(id: self.songListItem!.dissid) { (detail) in
             if detail != nil {
+                bgView.isHidden = false;
+                self.logoView.isHidden = false;
                 self.model = detail;
                 self.tableView.reloadData();
                 self.creatorIconView.sd_setImage(with: URL.init(string: self.model.headurl), completed: nil);
@@ -66,7 +70,7 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
                 if (self.model.visitnum >= 100000000) {
                     self.visitnumLB.text = String(format: "收听数：%.1f亿", CGFloat(self.model.visitnum)/100000000.0);
                 }
-                self.descLB.text = "简介："+self.model.desc;
+                self.descLB.text = "简介："+self.model.desc.htmlText();
                 self.skipMusic();
             }
         }
@@ -85,7 +89,9 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         iconView.layer.cornerRadius = 5*SCALE;
         iconView.layer.masksToBounds = true;
         iconView.sd_setImage(with: URL.init(string: self.songListItem.imgurl), completed: nil);
+        iconView.isHidden = true;
         headerView.addSubview(iconView);
+        self.logoView = iconView;
         
         let nameLB = UILabel.init(frame: CGRect.init(x: 170*SCALE, y: 20*SCALE, width: SCREEN_WIDTH-190*SCALE, height: 20*SCALE));
         nameLB.text = self.songListItem.dissname;

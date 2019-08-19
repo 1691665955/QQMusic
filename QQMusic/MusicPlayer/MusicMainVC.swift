@@ -96,9 +96,13 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
             break;
         case 2:
             //歌单
+            let vc = MusicSongListCategoryVC.init();
+            self.navigationController?.pushViewController(vc, animated: true);
             break;
         case 3:
             //MV
+            let vc = MusicMVListVC.init();
+            self.navigationController?.pushViewController(vc, animated: true);
             break;
         default:
             break;
@@ -174,6 +178,10 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
                 self.navigationController?.pushViewController(vc, animated: true);
                 break;
             case 2:
+                let vc = MusicMVDetailVC.init();
+                vc.mvItem = (cell.list[index] as! MVItem);
+                vc.hidesBottomBarWhenPushed = true;
+                self.navigationController?.pushViewController(vc, animated: true);
                 break;
             default:
                 break;
@@ -188,9 +196,14 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
                 self.navigationController?.pushViewController(vc, animated: true);
                 break;
             case 1:
-                
+                let vc = MusicSongListListVC.init();
+                vc.categoryID = 10000000;
+                vc.categoryName = "热门歌单";
+                self.navigationController?.pushViewController(vc, animated: true);
                 break;
             case 2:
+                let vc = MusicMVListVC.init();
+                self.navigationController?.pushViewController(vc, animated: true);
                 break;
             default:
                 break;

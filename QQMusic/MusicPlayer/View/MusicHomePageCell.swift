@@ -70,7 +70,7 @@ class MusicHomePageCell: UITableViewCell {
                 break
             case 2:
                 self.categoryNameLB.text = "热门MV";
-                MZMusicAPIRequest.getHotMVList(order: 0, pageSize: 3, page: 0) { (mvList:[MVItem]) in
+                MZMusicAPIRequest.getHotMVList(order: 1, pageSize: 3, page: 0) { (mvList:[MVItem]) in
                     if mvList.count > 0 {
                         self.list = mvList
                         for i in 0...2{
@@ -163,7 +163,7 @@ class MusicHomePageCell: UITableViewCell {
             iconView.addSubview(listenIconView);
             self.listenCountView.append(listenIconView)
             
-            let listenCountLB = UILabel.init(frame: CGRect.init(x: 24, y: itemHeight-24, width: itemWidth-30, height: 10));
+            let listenCountLB = UILabel.init(frame: CGRect.init(x: 24, y: itemHeight-18, width: itemWidth-30, height: 10));
             listenCountLB.textColor = .white;
             listenCountLB.font = .systemFont(ofSize: 8);
             listenCountLB.text = "12.5万"

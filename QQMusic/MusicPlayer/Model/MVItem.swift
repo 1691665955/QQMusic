@@ -24,6 +24,7 @@ class MVItem: NSObject,HandyJSON,NSCoding {
     var mv_switch:Int?
     var mvid:Int?
     var pubdate:Int?
+    var singers:[SingerItem]?
     
     required override init() {
         
@@ -43,6 +44,7 @@ class MVItem: NSObject,HandyJSON,NSCoding {
         aCoder.encode(mv_switch, forKey: "mv_switch")
         aCoder.encode(mvid, forKey: "mvid")
         aCoder.encode(pubdate, forKey: "pubdate")
+        aCoder.encode(singers, forKey: "singers")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -60,5 +62,20 @@ class MVItem: NSObject,HandyJSON,NSCoding {
         mv_switch = (aDecoder.decodeObject(forKey: "mv_switch") as? Int)
         mvid = (aDecoder.decodeObject(forKey: "mvid") as? Int)
         pubdate = (aDecoder.decodeObject(forKey: "pubdate") as? Int)
+        singers = (aDecoder.decodeObject(forKey: "singers") as? [SingerItem])
+    }
+    
+    func getSingerName() -> String {
+        var singer = String.init();
+        for singerItem in self.singers! {
+            singer.append(singerItem.name);
+            singer.append("/")
+        }
+        singer.removeLast();
+        return singer;
+    }
+    
+    func getPlayUrl() -> String {
+        return "https://v1.itooi.cn/tencent/mvUrl?id="+self.vid!+"&quality=1080"
     }
 }
