@@ -253,6 +253,11 @@ class MZMusicAPIRequest: NSObject {
         }
     }
     
+    /// 获取MV详情
+    ///
+    /// - Parameters:
+    ///   - id: MV的id
+    ///   - callback: 接口回调
     class func getMVDetail(id:String,callback:@escaping (MVDetail?)->Void) -> Void {
         self.post(url:"https://v1.itooi.cn/tencent/mv",parameters: ["id":id]) { (dic:AnyObject) in
             if((dic.value(forKey: "code") as! Int) < 0) {
@@ -261,6 +266,23 @@ class MZMusicAPIRequest: NSObject {
                 if((dic.value(forKey: "code") as! Int) == 200) {
                     let data:NSDictionary = dic.value(forKey: "data") as! NSDictionary
                     let detail = MVDetail.deserialize(from: data.value(forKey: id) as? NSDictionary)
+                    callback(detail)
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback(nil)
+                }
+            }
+        }
+    }
+    
+    class func getAlbumDetail(id:String,callback:@escaping (AlbumDetail?)->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/album",parameters: ["id":id,"format":0]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback(nil)
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data:NSDictionary = dic.value(forKey: "data") as! NSDictionary
+                    let detail = AlbumDetail.deserialize(from: data)
                     callback(detail)
                 } else {
                     MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)

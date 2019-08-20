@@ -11,7 +11,7 @@ import AVFoundation
 
 class MusicMVDetailVC: UIViewController {
 
-    var mvItem:MVItem!
+    var vid:String!
     var player:AVPlayer!
     var playerItem:AVPlayerItem!
     var avLayer:AVPlayerLayer!
@@ -28,11 +28,14 @@ class MusicMVDetailVC: UIViewController {
     var fullCurrentTimeLB:UILabel!
     var fullDurationLB:UILabel!
     var mvDetail:MVDetail!
+    var resolutions = ["1080","960","720","480","360","240"]
+    var currentResolution = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = mvItem.title;
         self.view.backgroundColor = .white;
+        
+        MZMusicPlayerManager.shareManager.pause()
         
         NotificationCenter.default.addObserver(self, selector: #selector(seekToStart), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         
@@ -43,7 +46,7 @@ class MusicMVDetailVC: UIViewController {
         bgView.addGestureRecognizer(tap);
         self.view.addSubview(bgView);
         
-        playerItem = AVPlayerItem.init(url: URL.init(string: mvItem.getPlayUrl())!)
+        playerItem = AVPlayerItem.init(url: URL.init(string: "https://v1.itooi.cn/tencent/mvUrl?id="+self.vid!+"&quality=1080")!)
         player = AVPlayer.init(playerItem: playerItem);
         avLayer = AVPlayerLayer(player: player);
         avLayer.videoGravity = AVLayerVideoGravity.resizeAspect;
@@ -137,7 +140,7 @@ class MusicMVDetailVC: UIViewController {
         timer.fire();
         RunLoop.main.add(timer, forMode: .common);
         
-        MZMusicAPIRequest.getMVDetail(id: self.mvItem.vid!) { (detail) in
+        MZMusicAPIRequest.getMVDetail(id: self.vid!) { (detail) in
             if detail != nil {
                 self.mvDetail = detail;
                 
@@ -305,8 +308,28 @@ class MusicMVDetailVC: UIViewController {
                 self.player.play();
                 break;
             case .unknown:
+                currentResolution += 1;
+                if currentResolution < 6 {
+                    let arr = mvDetail.getPlayUrl().components(separatedBy: "&")
+                    let playerItem = AVPlayerItem.init(url: URL.init(string: arr[0]+"&quality="+resolutions[currentResolution])!)
+                    playerItem.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil);
+                    playerItem.addObserver(self, forKeyPath: "loadedTimeRanges", options: NSKeyValueObservingOptions.new, context: nil);
+                    self.playerItem = playerItem;
+                    self.player.replaceCurrentItem(with: playerItem)
+                    self.player.play()
+                }
                 break;
             case .failed:
+                currentResolution += 1;
+                if currentResolution < 6 {
+                    let arr = mvDetail.getPlayUrl().components(separatedBy: "&")
+                    let playerItem = AVPlayerItem.init(url: URL.init(string: arr[0]+"&quality="+resolutions[currentResolution])!)
+                    playerItem.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.new, context: nil);
+                    playerItem.addObserver(self, forKeyPath: "loadedTimeRanges", options: NSKeyValueObservingOptions.new, context: nil);
+                    self.playerItem = playerItem;
+                    self.player.replaceCurrentItem(with: playerItem)
+                    self.player.play()
+                }
                 break;
             @unknown default:
                 break;

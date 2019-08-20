@@ -70,7 +70,6 @@ class AlbumItem: NSObject,HandyJSON,NSCoding {
     var album:AlbumItem!
     var mv:MVItem!
     
-    
     func encode(with aCoder: NSCoder) {
         aCoder.encode(musicLyricTimes, forKey: "musicLyricTimes")
         aCoder.encode(musicLyricLyrics, forKey: "musicLyricLyrics")
@@ -108,6 +107,29 @@ class AlbumItem: NSObject,HandyJSON,NSCoding {
     
     func getUrl() -> String {
         return "https://v1.itooi.cn/tencent/url?id="+self.mid+"&quality=128"
+    }
+    
+    class func convertSongToMusic(songItem:SongItem) -> MusicItem {
+        let musicItem = MusicItem.init();
+        musicItem.title = songItem.songname;
+        musicItem.mid = songItem.songmid;
+        musicItem.singer = songItem.singer;
+        let albumItem = AlbumItem.init();
+        albumItem.mid = songItem.albummid;
+        albumItem.name = songItem.albumname;
+        musicItem.album = albumItem;
+        let mv = MVItem.init();
+        mv.vid = songItem.vid;
+        musicItem.mv = mv;
+        return musicItem;
+    }
+    
+    class func convertSongListToMusicList(songList:[SongItem]) -> [MusicItem] {
+        var musicList = [MusicItem]();
+        for songItem in songList {
+            musicList.append(convertSongToMusic(songItem: songItem));
+        }
+        return musicList;
     }
 }
 

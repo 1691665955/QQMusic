@@ -64,7 +64,7 @@ class MusicMVListVC: UIViewController,UITableViewDataSource,UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MusicMVDetailVC.init();
-        vc.mvItem = self.mvList[indexPath.row];
+        vc.vid = self.mvList[indexPath.row].vid;
         vc.hidesBottomBarWhenPushed = true;
         self.navigationController?.pushViewController(vc, animated: true);
     }

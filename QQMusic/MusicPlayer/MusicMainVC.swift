@@ -134,9 +134,14 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
     func bannerView(_ bannerView: MZBannerView!, didSelectedIndex index: Int, data: Any!) {
         let banner = data as! BannerItem;
         if banner.type == 10012 {
-//            url = "https://y.qq.com/n/yqq/mv/v/\(url!).html";
+            let vc = MusicMVDetailVC.init();
+            vc.vid = banner.jump_info.url
+            vc.hidesBottomBarWhenPushed = true;
+            self.navigationController?.pushViewController(vc, animated: true);
         } else if banner.type == 10002 {
-//            url = "https://y.qq.com/n/yqq/album/\(url!).html"
+            let vc = AlbumDetailVC.init();
+            vc.albumId = banner.jump_info.url
+            self.navigationController?.pushViewController(vc, animated: true);
         } else {
             let webVC = MusicWebVC.init();
             webVC.url = banner.jump_info.url;
@@ -179,7 +184,8 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
                 break;
             case 2:
                 let vc = MusicMVDetailVC.init();
-                vc.mvItem = (cell.list[index] as! MVItem);
+                let mvItem = cell.list[index] as! MVItem
+                vc.vid = mvItem.vid
                 vc.hidesBottomBarWhenPushed = true;
                 self.navigationController?.pushViewController(vc, animated: true);
                 break;

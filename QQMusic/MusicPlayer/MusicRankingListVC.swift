@@ -66,6 +66,12 @@ class MusicRankingListVC: UIViewController,UITableViewDataSource,UITableViewDele
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicListCell") as! MusicListCell;
         cell.musicItem = self.musicList[indexPath.row];
         cell.index = indexPath.row;
+        cell.playMVCallback = { vid in
+            let vc = MusicMVDetailVC.init();
+            vc.vid = vid
+            vc.hidesBottomBarWhenPushed = true;
+            self.navigationController?.pushViewController(vc, animated: true);
+        }
         return cell;
     }
     

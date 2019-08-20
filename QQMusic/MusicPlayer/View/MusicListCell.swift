@@ -34,6 +34,7 @@ class MusicListCell: UITableViewCell {
             self.indexLB.text = String(index+1);
         }
     }
+    var playMVCallback:((String)->Void)?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier);
@@ -74,7 +75,9 @@ class MusicListCell: UITableViewCell {
     }
     
     @objc func playMV() -> Void {
-        
+        if self.playMVCallback != nil {
+            self.playMVCallback!(self.musicItem.mv.vid!)
+        }
     }
     
     @objc func more() -> Void {
