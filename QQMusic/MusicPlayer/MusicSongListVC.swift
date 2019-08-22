@@ -53,6 +53,8 @@ class MusicSongListVC: UIViewController,UITableViewDelegate,UITableViewDataSourc
         self.view.addSubview(tableView);
         self.tableView = tableView;
         self.initHeaderView();
+        let footer = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 10))
+        tableView.tableFooterView = footer;
         
         MZMusicAPIRequest.getSongListDetail(id: self.songListItem!.dissid) { (detail) in
             if detail != nil {

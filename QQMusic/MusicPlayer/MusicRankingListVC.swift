@@ -22,6 +22,8 @@ class MusicRankingListVC: UIViewController,UITableViewDataSource,UITableViewDele
         self.view.backgroundColor = .white;
         self.title = rankingTitle;
         
+        NotificationCenter.default.addObserver(self, selector: #selector(skipMusic), name: Notification.Name.init(rawValue: "SkipMusic"), object: nil);
+        
         tableView = UITableView.init(frame: CGRect.init(x: 0, y: Navi_Height, width: SCREEN_WIDTH, height: SCREEN_HEIGHT-Navi_Height-Tabbar_Height), style: .plain);
         tableView.backgroundColor = .clear;
         tableView.dataSource = self;
@@ -31,6 +33,9 @@ class MusicRankingListVC: UIViewController,UITableViewDataSource,UITableViewDele
         tableView.register(MusicListCell.classForCoder(), forCellReuseIdentifier: "MusicListCell")
         tableView.mj_footer = MJRefreshAutoNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadMore))
         self.view.addSubview(tableView);
+        
+        let footer = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 10))
+        tableView.tableFooterView = footer;
         
         self.loadNew();
     }

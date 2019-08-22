@@ -1,5 +1,5 @@
 //
-//  AlbumDetailIntroduceVC.swift
+//  MusicAlbumDetailIntroduceVC..swift
 //  QQMusic
 //
 //  Created by 曾龙 on 2019/8/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumDetailIntroduceVC: UIViewController {
+class MusicAlbumDetailIntroduceVC: UIViewController {
 
     var albumDetail:AlbumDetail!
     

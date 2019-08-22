@@ -27,8 +27,8 @@ class MusicMVListVC: UIViewController,UITableViewDataSource,UITableViewDelegate 
         tableView.mj_footer = MJRefreshAutoNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadMore))
         self.view.addSubview(tableView);
         
-        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 10));
-        tableView.tableHeaderView = headerView;
+        let footerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 10));
+        tableView.tableFooterView = footerView;
         
         self.loadNew();
     }

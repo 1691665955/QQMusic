@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MBProgressHUD
 
 class MusicMVDetailVC: UIViewController {
 
@@ -19,6 +20,7 @@ class MusicMVDetailVC: UIViewController {
     var fullScreen = false
     var progressView:UISlider!
     var currentTimeLB:UILabel!
+    var fullScreenBtn:UIButton!
     var timer:Timer!
     var bgView:UIView!
     var playBtn:UIButton!
@@ -31,6 +33,8 @@ class MusicMVDetailVC: UIViewController {
     var resolutions = ["1080","960","720","480","360","240"]
     var currentResolution = 0
     
+    var loadingView:UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white;
@@ -40,11 +44,18 @@ class MusicMVDetailVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(seekToStart), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         
         bgView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH/640*360));
-        bgView.backgroundColor = .white
+        bgView.backgroundColor = .black
         bgView.isUserInteractionEnabled = true;
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(showOperation));
         bgView.addGestureRecognizer(tap);
         self.view.addSubview(bgView);
+        
+        loadingView = UIActivityIndicatorView.init(style: .white);
+        loadingView.frame = CGRect.init(x: (SCREEN_WIDTH-100)/2, y: (SCREEN_WIDTH/640*360-100)/2, width: 100, height: 100);
+        loadingView.backgroundColor = .clear;
+        loadingView.hidesWhenStopped = true;
+        bgView.addSubview(loadingView);
+        loadingView.startAnimating();
         
         playerItem = AVPlayerItem.init(url: URL.init(string: "https://v1.itooi.cn/tencent/mvUrl?id="+self.vid!+"&quality=1080")!)
         player = AVPlayer.init(playerItem: playerItem);
@@ -57,18 +68,25 @@ class MusicMVDetailVC: UIViewController {
         
         playerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_WIDTH/640*360));
         playerView.isUserInteractionEnabled = true;
-        playerView.isHidden = true;
+        let tap1 = UITapGestureRecognizer.init(target: self, action: #selector(showOperation));
+        playerView.addGestureRecognizer(tap1);
+        
+        
         
         let backBtn = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 40, height: 40));
         backBtn.setImage(UIImage.init(named: "mv_player_back"), for: .normal);
         backBtn.addTarget(self, action: #selector(back), for: .touchUpInside);
         playerView.addSubview(backBtn);
+        if isIPhoneX {
+            backBtn.frame = CGRect.init(x: 0, y: 10, width: 40, height: 40)
+        }
         
         playBtn = UIButton.init(type: .custom);
         playBtn.frame = CGRect.init(x: 0, y: 0, width: 50, height: 50);
         playBtn.center = playerView.center;
         playBtn.setImage(UIImage.init(named: "mv_pause"), for: .normal);
         playBtn.addTarget(self, action: #selector(playOrPause), for: .touchUpInside);
+        playBtn.isHidden = true;
         playerView.addSubview(playBtn)
         
         progressView = UISlider.init(frame: CGRect.init(x: -2, y: SCREEN_WIDTH/640*360-5, width: SCREEN_WIDTH+4, height: 10))
@@ -76,6 +94,7 @@ class MusicMVDetailVC: UIViewController {
         progressView.maximumTrackTintColor = UIColor.gray
         progressView.setThumbImage(UIImage.init(named: "mv_slider"), for: UIControl.State.normal)
         playerView.addSubview(self.progressView)
+        progressView.isUserInteractionEnabled = false;
         progressView.addTarget(self, action: #selector(updateMVProgress(slider:)), for: UIControl.Event.valueChanged)
         
         currentTimeLB = UILabel.init(frame: CGRect.init(x: 10, y: SCREEN_WIDTH/640*360-20, width: 80, height: 10))
@@ -85,11 +104,12 @@ class MusicMVDetailVC: UIViewController {
         currentTimeLB.font = UIFont.systemFont(ofSize: 10)
         playerView.addSubview(currentTimeLB)
         
-        let fullScreenBtn = UIButton.init(type: .custom);
+        fullScreenBtn = UIButton.init(type: .custom);
         fullScreenBtn.frame = CGRect.init(x: SCREEN_WIDTH-40, y: SCREEN_WIDTH/640*360-30, width: 40, height: 25);
         fullScreenBtn.setImage(UIImage.init(named: "full_screen"), for: .normal);
         fullScreenBtn.backgroundColor = .clear;
         fullScreenBtn.addTarget(self, action: #selector(mvFullScreen), for: .touchUpInside);
+        fullScreenBtn.isHidden = true;
         playerView.addSubview(fullScreenBtn)
         
         self.view.addSubview(playerView);
@@ -97,11 +117,20 @@ class MusicMVDetailVC: UIViewController {
         
         //全屏
         fullPlayerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_HEIGHT, height: SCREEN_WIDTH));
+        fullPlayerView.isUserInteractionEnabled = true;
+        let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(showOperation));
+        fullPlayerView.addGestureRecognizer(tap2);
+        
+        
         let fullBackBtn = UIButton.init(type: .custom);
         fullBackBtn.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40);
         fullBackBtn.setImage(UIImage.init(named: "mv_player_back"), for: .normal);
         fullBackBtn.addTarget(self, action: #selector(mvFullScreen), for: .touchUpInside);
         fullPlayerView.addSubview(fullBackBtn);
+        
+        if isIPhoneX {
+            fullBackBtn.frame = CGRect.init(x: StateBar_Height, y: 0, width: 40, height: 40)
+        }
         
         fullPlayBtn = UIButton.init(type: .custom);
         fullPlayBtn.frame = CGRect.init(x: 0, y: 0, width: 60, height: 60);
@@ -130,6 +159,12 @@ class MusicMVDetailVC: UIViewController {
         fullDurationLB.textColor = UIColor.white
         fullDurationLB.font = UIFont.systemFont(ofSize: 14)
         fullPlayerView.addSubview(fullDurationLB)
+        
+        if isIPhoneX {
+            fullProgressView.frame = CGRect.init(x: StateBar_Height+50, y: SCREEN_WIDTH-40, width: SCREEN_HEIGHT-100-StateBar_Height*2, height: 10)
+            fullCurrentTimeLB.frame = CGRect.init(x: StateBar_Height, y: SCREEN_WIDTH-45, width: 50, height: 20)
+            fullDurationLB.frame = CGRect.init(x: SCREEN_HEIGHT-50-StateBar_Height, y: SCREEN_WIDTH-45, width: 50, height: 20)
+        }
         
         fullPlayerView.layer.setAffineTransform(CGAffineTransform.init(rotationAngle: CGFloat(Double.pi/2)));
         fullPlayerView.layer.position = CGPoint.init(x: SCREEN_WIDTH/2, y: SCREEN_HEIGHT/2)
@@ -219,8 +254,13 @@ class MusicMVDetailVC: UIViewController {
     
     @objc func seekToStart() -> Void {
         player.seek(to: CMTimeMake(value: 0, timescale: 1));
-        playerView.isHidden = false;
+        fullPlayBtn.setImage(UIImage.init(named: "mv_play"), for: .normal);
         playBtn.setImage(UIImage.init(named: "mv_play"), for: .normal);
+        if fullScreen {
+            fullPlayerView.isHidden = false;
+        } else {
+            playerView.isHidden = false;
+        }
     }
     
     @objc func back() -> Void {
@@ -244,6 +284,7 @@ class MusicMVDetailVC: UIViewController {
         if player.rate == 0 {
             return;
         }
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showOperation), object: nil);
         if fullScreen {
             fullPlayerView.isHidden = !fullPlayerView.isHidden;
             if !fullPlayerView.isHidden {
@@ -305,6 +346,12 @@ class MusicMVDetailVC: UIViewController {
         if keyPath == "status" {
             switch self.playerItem.status {
             case .readyToPlay:
+                playerView.isHidden = true;
+                playBtn.isHidden = false;
+                fullScreenBtn.isHidden = false;
+                progressView.isUserInteractionEnabled = true;
+                
+                loadingView.stopAnimating();
                 self.player.play();
                 break;
             case .unknown:

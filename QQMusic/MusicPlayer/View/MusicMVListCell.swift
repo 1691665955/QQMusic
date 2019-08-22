@@ -29,6 +29,22 @@ class MusicMVListCell: UITableViewCell {
             }
         }
     }
+    
+    var artistMVItem:ArtistMVItem! {
+        didSet {
+            coverView.sd_setImage(with: URL.init(string: artistMVItem.pic!), completed: nil);
+            mvNameLB.text = artistMVItem.title;
+            singerLB.text = artistMVItem.singer_name;
+            listenerLB.text = artistMVItem.listenCount
+            if (Int(artistMVItem.listenCount)! >= 10000) {
+                listenerLB.text = String(format: "%.1f万", CGFloat(Int(artistMVItem.listenCount)!)/10000.0);
+            }
+            if (Int(artistMVItem.listenCount)! >= 100000000) {
+                listenerLB.text = String(format: "%.1f亿", CGFloat(Int(artistMVItem.listenCount)!)/100000000.0);
+            }
+        }
+    }
+    
     var index:Int! {
         didSet {
             rankingLB.text = String(index+1);
@@ -44,7 +60,7 @@ class MusicMVListCell: UITableViewCell {
     func initUI() -> Void {
         let SCALE = (SCREEN_WIDTH-20)/355;
         
-        coverView = UIImageView.init(frame: CGRect.init(x: 10, y: 0, width: SCREEN_WIDTH-20, height: (SCREEN_WIDTH-20)/640*360));
+        coverView = UIImageView.init(frame: CGRect.init(x: 10, y: 10, width: SCREEN_WIDTH-20, height: (SCREEN_WIDTH-20)/640*360));
         coverView.layer.cornerRadius = 5;
         coverView.layer.masksToBounds = true;
         self.addSubview(coverView);

@@ -78,4 +78,6 @@ class MVItem: NSObject,HandyJSON,NSCoding {
     func getPlayUrl() -> String {
         return "https://v1.itooi.cn/tencent/mvUrl?id="+self.vid!+"&quality=1080"
     }
+    
+    
 }

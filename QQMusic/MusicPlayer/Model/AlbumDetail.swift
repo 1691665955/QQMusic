@@ -20,23 +20,6 @@ class AlbumInfo: NSObject,HandyJSON {
     }
 }
 
-class ExtraItem: NSObject,HandyJSON {
-    
-    var Fupload_time:String!
-    
-    required override init() {
-        
-    }
-    
-    func getTime() -> String {
-        let time = self.Fupload_time.components(separatedBy: " ");
-        if time.count > 0 {
-            return time[0]
-        }
-        return ""
-    }
-}
-
 class SongItem: NSObject,HandyJSON {
     
     var singer:[SingerItem]!
@@ -45,8 +28,6 @@ class SongItem: NSObject,HandyJSON {
     var albummid:String!
     var vid:String!
     var songname:String!
-    var interval:Int!
-    var extra:ExtraItem!
 
     required override init() {
         

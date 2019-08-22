@@ -131,5 +131,17 @@ class AlbumItem: NSObject,HandyJSON,NSCoding {
         }
         return musicList;
     }
+    
+    class func convertArtistMusicToMusic(artistMusic:ArtistMusicItem) -> MusicItem {
+        return convertSongToMusic(songItem: artistMusic.musicData);
+    }
+    
+    class func convertArtistMusicListToMusicList(artistMusicList:[ArtistMusicItem]) -> [MusicItem] {
+        var musicList = [MusicItem]();
+        for artistMusic in artistMusicList {
+            musicList.append(convertArtistMusicToMusic(artistMusic: artistMusic));
+        }
+        return musicList;
+    }
 }
 

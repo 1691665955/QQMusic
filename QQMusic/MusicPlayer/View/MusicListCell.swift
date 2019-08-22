@@ -20,12 +20,12 @@ class MusicListCell: UITableViewCell {
             self.singerLB.text = musicItem.getSingerName()+" - "+musicItem.album.name;
             if musicItem.mv.vid!.count == 0 {
                 self.mvBtn.isHidden = true;
-                self.nameLB.frame = CGRect.init(x: 50, y: 10, width: SCREEN_WIDTH-50-40, height: 20);
-                self.singerLB.frame = CGRect.init(x: 50, y: 30, width: SCREEN_WIDTH-50-40, height: 16);
+                self.nameLB.frame = CGRect.init(x: 50, y: 20, width: SCREEN_WIDTH-50-40, height: 20);
+                self.singerLB.frame = CGRect.init(x: 50, y: 40, width: SCREEN_WIDTH-50-40, height: 15);
             } else {
                 self.mvBtn.isHidden = false;
-                self.nameLB.frame = CGRect.init(x: 50, y: 10, width: SCREEN_WIDTH-50-80, height: 20);
-                self.singerLB.frame = CGRect.init(x: 50, y: 30, width: SCREEN_WIDTH-50-80, height: 16);
+                self.nameLB.frame = CGRect.init(x: 50, y: 20, width: SCREEN_WIDTH-50-80, height: 20);
+                self.singerLB.frame = CGRect.init(x: 50, y: 40, width: SCREEN_WIDTH-50-80, height: 15);
             }
         }
     }
@@ -43,32 +43,32 @@ class MusicListCell: UITableViewCell {
     }
     
     func initUI() -> Void {
-        let indexLB = UILabel.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 56));
+        let indexLB = UILabel.init(frame: CGRect.init(x: 0, y: 10, width: 50, height: 55));
         indexLB.textAlignment = .center;
         indexLB.font = .systemFont(ofSize: 18);
         self.addSubview(indexLB);
         self.indexLB = indexLB;
         
-        let nameLB = UILabel.init(frame: CGRect.init(x: 50, y: 10, width: SCREEN_WIDTH-50-80, height: 20));
+        let nameLB = UILabel.init(frame: CGRect.init(x: 50, y: 20, width: SCREEN_WIDTH-50-80, height: 20));
         nameLB.font = .systemFont(ofSize: 16);
         self.addSubview(nameLB);
         self.nameLB = nameLB;
         
-        let singerLB = UILabel.init(frame: CGRect.init(x: 50, y: 30, width: SCREEN_WIDTH-50-80, height: 16));
+        let singerLB = UILabel.init(frame: CGRect.init(x: 50, y: 40, width: SCREEN_WIDTH-50-80, height: 15));
         singerLB.textColor = RGB(r: 136, g: 136, b: 136);
         singerLB.font = .systemFont(ofSize: 12);
         self.addSubview(singerLB);
         self.singerLB = singerLB;
         
         let mvBtn = UIButton.init(type: .custom);
-        mvBtn.frame = CGRect.init(x: SCREEN_WIDTH-80, y: 0, width: 40, height: 56);
+        mvBtn.frame = CGRect.init(x: SCREEN_WIDTH-80, y: 10, width: 40, height: 55);
         mvBtn.setImage(UIImage.init(named: "music_list_mv_play"), for: .normal);
         mvBtn.addTarget(self, action: #selector(playMV), for: .touchUpInside);
         self.addSubview(mvBtn);
         self.mvBtn = mvBtn;
         
         let moreBtn = UIButton.init(type: .custom);
-        moreBtn.frame = CGRect.init(x: SCREEN_WIDTH-40, y: 0, width: 40, height: 56);
+        moreBtn.frame = CGRect.init(x: SCREEN_WIDTH-40, y: 10, width: 40, height: 55);
         moreBtn.setImage(UIImage.init(named: "music_list_more"), for: .normal);
         moreBtn.addTarget(self, action: #selector(more), for: .touchUpInside);
         self.addSubview(moreBtn);

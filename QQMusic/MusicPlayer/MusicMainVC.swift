@@ -88,6 +88,8 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
         switch tap.view!.tag-200 {
         case 0:
             //歌手
+            let vc = MusicSingerListVC.init();
+            self.navigationController?.pushViewController(vc, animated: true);
             break;
         case 1:
             //排行
@@ -139,7 +141,7 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
             vc.hidesBottomBarWhenPushed = true;
             self.navigationController?.pushViewController(vc, animated: true);
         } else if banner.type == 10002 {
-            let vc = AlbumDetailVC.init();
+            let vc = MusicAlbumDetailVC.init();
             vc.albumId = banner.jump_info.url
             self.navigationController?.pushViewController(vc, animated: true);
         } else {

@@ -275,6 +275,11 @@ class MZMusicAPIRequest: NSObject {
         }
     }
     
+    /// 获取专辑详情
+    ///
+    /// - Parameters:
+    ///   - id: 专辑ID
+    ///   - callback: 接口回调
     class func getAlbumDetail(id:String,callback:@escaping (AlbumDetail?)->Void) -> Void {
         self.post(url:"https://v1.itooi.cn/tencent/album",parameters: ["id":id,"format":0]) { (dic:AnyObject) in
             if((dic.value(forKey: "code") as! Int) < 0) {
@@ -291,4 +296,149 @@ class MZMusicAPIRequest: NSObject {
             }
         }
     }
+    
+    
+    /// 歌手分类
+    ///
+    /// - Parameter callback: 接口回调
+    class func getArtistCategory(callback:@escaping (SingerCategory?)->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/artist/category",parameters: [:]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback(nil)
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data:NSDictionary = dic.value(forKey: "data") as! NSDictionary
+                    let category = SingerCategory.deserialize(from: data)
+                    callback(category)
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback(nil)
+                }
+            }
+        }
+    }
+    
+    /// 歌手列表
+    ///
+    /// - Parameters:
+    ///   - sexId: 性别ID
+    ///   - areaId: 地区ID
+    ///   - genre: 类型ID
+    ///   - index: 索引
+    ///   - pageSize: 获取条数
+    ///   - page: 页码
+    ///   - callback: 接口回调
+    class func getSingerList(sexId:Int,areaId:Int,genre:Int,index:Int,pageSize:Int,page:Int,callback:@escaping ([ArtistItem])->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/artist/list",parameters: ["sexId":sexId,"areaId":areaId,"genre":genre,"index":index,"pageSize":pageSize,"page":page]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data = dic.value(forKey: "data") as! NSArray;
+                    let singerList = [ArtistItem].deserialize(from: data)
+                    callback(singerList as! [ArtistItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    /// 歌手详情
+    ///
+    /// - Parameters:
+    ///   - id: 歌手id
+    ///   - callback: 接口回调
+    class func getArtistDetail(id:String,callback:@escaping (ArtistDetail?)->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/artist",parameters: ["id":id]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback(nil)
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data:NSDictionary = dic.value(forKey: "data") as! NSDictionary
+                    let detail = ArtistDetail.deserialize(from: data)
+                    callback(detail)
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback(nil)
+                }
+            }
+        }
+    }
+    
+    /// 歌手音乐
+    ///
+    /// - Parameters:
+    ///   - id: 歌手id
+    ///   - pageSize: 获取条数
+    ///   - page: 分页
+    ///   - callback: 接口回调
+    class func getArtistMusicList(id:String,pageSize:Int,page:Int,callback:@escaping ([ArtistMusicItem])->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/song/artist",parameters: ["id":id,"format":0,"pageSize":pageSize,"page":page]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data = dic.value(forKey: "data") as! NSArray;
+                    let musicList = [ArtistMusicItem].deserialize(from: data)
+                    callback(musicList as! [ArtistMusicItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    /// 歌手专辑
+    ///
+    /// - Parameters:
+    ///   - id: 歌手id
+    ///   - callback: 接口回调
+    class func getArtistAlbumList(id:String,callback:@escaping ([ArtistAlbumItem])->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/album/artist",parameters: ["id":id]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data = dic.value(forKey: "data") as! NSArray;
+                    let albumList = [ArtistAlbumItem].deserialize(from: data)
+                    callback(albumList as! [ArtistAlbumItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
+    /// 歌手MV
+    ///
+    /// - Parameters:
+    ///   - id: 歌手id
+    ///   - pageSize: 获取条数
+    ///   - page: 分页
+    ///   - callback: 接口回调
+    class func getArtistMVList(id:String,pageSize:Int,page:Int,callback:@escaping ([ArtistMVItem])->Void) -> Void {
+        self.post(url:"https://v1.itooi.cn/tencent/mv/artist",parameters: ["id":id,"pageSize":pageSize,"page":page]) { (dic:AnyObject) in
+            if((dic.value(forKey: "code") as! Int) < 0) {
+                callback([])
+                return
+            } else {
+                if((dic.value(forKey: "code") as! Int) == 200) {
+                    let data = dic.value(forKey: "data") as! NSArray;
+                    let mvList = [ArtistMVItem].deserialize(from: data)
+                    callback(mvList as! [ArtistMVItem])
+                } else {
+                    MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
+                    callback([])
+                }
+            }
+        }
+    }
+    
 }

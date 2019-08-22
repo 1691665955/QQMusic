@@ -51,9 +51,9 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         self.musicItem = manager.musicItem
         manager.delegate = self
         
-        let titleBGView = UIView.init(frame: CGRect.init(x: 60, y: 0, width: 200, height: 44))
+        let titleBGView = UIView.init(frame: CGRect.init(x: 60, y: 0, width: SCREEN_WIDTH-120, height: 44))
         titleBGView.backgroundColor = UIColor.clear
-        self.titleLB = MZMarqueeLabel.init(frame: CGRect.init(x: 0, y: 10, width: 200, height: 24))
+        self.titleLB = MZMarqueeLabel.init(frame: CGRect.init(x: 0, y: 10, width: SCREEN_WIDTH-120, height: 24))
         titleBGView.addSubview(self.titleLB)
         self.navigationController?.navigationBar.addSubview(titleBGView)
         self.titleLB.setBackgroundColr(backgroundColr: UIColor.clear, text: self.musicItem.title, font: UIFont.systemFont(ofSize: 18), textColor: UIColor.white,textAlignment:NSTextAlignment.center)
@@ -70,7 +70,7 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         blurView.contentView.addSubview(vibrancyView)
         self.view.addSubview(blurView)
         
-        let playerView:UIView = UIView.init(frame: CGRect.init(x: 0, y: SCREEN_HEIGHT-100, width: SCREEN_WIDTH, height: 100))
+        let playerView:UIView = UIView.init(frame: CGRect.init(x: 0, y: SCREEN_HEIGHT-100-Safe_Bottom, width: SCREEN_WIDTH, height: 100))
         playerView.backgroundColor = UIColor.clear
         self.view.addSubview(playerView)
         
@@ -119,14 +119,14 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         
         
         let btn1:UIButton = UIButton.init(type: UIButton.ButtonType.custom)
-        btn1.frame = CGRect.init(x: 60, y: 40, width: 50, height: 50)
+        btn1.frame = CGRect.init(x: (SCREEN_WIDTH-50)/2-75, y: 40, width: 50, height: 50)
         btn1.setBackgroundImage(UIImage.init(named: "player_btn_pre_normal"), for: UIControl.State.normal)
         btn1.setBackgroundImage(UIImage.init(named: "player_btn_pre_highlight"), for: UIControl.State.highlighted)
         btn1.addTarget(self, action:#selector(musicPrePlay), for: UIControl.Event.touchUpInside)
         playerView.addSubview(btn1)
         
         let btn3:UIButton = UIButton.init(type: UIButton.ButtonType.custom)
-        btn3.frame = CGRect.init(x: 135, y: 40, width: 50, height: 50)
+        btn3.frame = CGRect.init(x: (SCREEN_WIDTH-50)/2, y: 40, width: 50, height: 50)
         btn3.setBackgroundImage(UIImage.init(named: "player_btn_play_normal"), for: UIControl.State.normal)
         btn3.setBackgroundImage(UIImage.init(named: "player_btn_pause_normal"), for: UIControl.State.selected)
         btn3.addTarget(self, action:#selector(musicPlayOrPause(sender:)), for: UIControl.Event.touchUpInside)
@@ -134,14 +134,14 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         self.playBtn = btn3
         
         let btn2:UIButton = UIButton.init(type: UIButton.ButtonType.custom)
-        btn2.frame = CGRect.init(x: 210, y: 40, width: 50, height: 50)
+        btn2.frame = CGRect.init(x: (SCREEN_WIDTH-50)/2+75, y: 40, width: 50, height: 50)
         btn2.setBackgroundImage(UIImage.init(named: "player_btn_next_normal"), for: UIControl.State.normal)
         btn2.setBackgroundImage(UIImage.init(named: "player_btn_next_highlight"), for: UIControl.State.highlighted)
         btn2.addTarget(self, action:#selector(musicNextPlay), for: UIControl.Event.touchUpInside)
         playerView.addSubview(btn2)
         
         let btn4:UIButton = UIButton.init(type: UIButton.ButtonType.custom)
-        btn4.frame = CGRect.init(x: 270, y: 45, width: 40, height: 40)
+        btn4.frame = CGRect.init(x: SCREEN_WIDTH-50, y: 45, width: 40, height: 40)
         btn4.setBackgroundImage(UIImage.init(named: "main_tab_more"), for: UIControl.State.normal)
         btn4.setBackgroundImage(UIImage.init(named: "main_tab_more_h"), for: UIControl.State.highlighted)
         btn4.addTarget(self, action:#selector(showMusicList), for: UIControl.Event.touchUpInside)
@@ -159,7 +159,7 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         volume.sizeToFit()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: volume)
         
-        let scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: 64, width: SCREEN_WIDTH, height: SCREEN_HEIGHT-164))
+        let scrollView = UIScrollView.init(frame: CGRect.init(x: 0, y: Navi_Height, width: SCREEN_WIDTH, height: SCREEN_HEIGHT-100-Navi_Height-Safe_Bottom))
         scrollView.backgroundColor = UIColor.clear
         scrollView.contentSize = CGSize.init(width: SCREEN_WIDTH*2, height: SCREEN_HEIGHT-164)
         scrollView.isPagingEnabled = true
@@ -197,7 +197,7 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
         self.albumImageView.layer.add(rotationAnimation, forKey: "rotationAnimation")
         
         
-        self.subLyricTableView = UITableView.init(frame: CGRect.init(x: 0, y: SCREEN_WIDTH-50, width: SCREEN_WIDTH, height: 143), style: UITableView.Style.plain)
+        self.subLyricTableView = UITableView.init(frame: CGRect.init(x: 0, y: SCREEN_WIDTH-50, width: SCREEN_WIDTH, height: SCREEN_HEIGHT-Navi_Height-(SCREEN_WIDTH-50)-100-Safe_Bottom-20), style: UITableView.Style.plain)
         self.subLyricTableView.backgroundColor = UIColor.clear
         self.subLyricTableView.delegate = self
         self.subLyricTableView.dataSource = self
@@ -209,7 +209,7 @@ class MusicLyricVC: UIViewController,UITableViewDelegate,UITableViewDataSource,M
 
         
         
-        self.tableView = UITableView.init(frame: CGRect.init(x: SCREEN_WIDTH, y: 10, width: SCREEN_WIDTH, height: SCREEN_HEIGHT-184))
+        self.tableView = UITableView.init(frame: CGRect.init(x: SCREEN_WIDTH, y: 25, width: SCREEN_WIDTH, height: SCREEN_HEIGHT-100-Navi_Height-Safe_Bottom-50))
         self.tableView.backgroundColor = UIColor.clear
         self.tableView.delegate = self
         self.tableView.dataSource = self

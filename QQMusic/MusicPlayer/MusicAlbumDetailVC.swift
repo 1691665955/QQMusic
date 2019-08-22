@@ -1,5 +1,5 @@
 //
-//  AlbumDetailVC.swift
+//  MusicAlbumDetailVC.swift
 //  QQMusic
 //
 //  Created by 曾龙 on 2019/8/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AlbumDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class MusicAlbumDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     var albumId:String!
     var albumDetail:AlbumDetail!
@@ -52,6 +52,8 @@ class AlbumDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource 
         self.view.addSubview(tableView);
         self.tableView = tableView;
         self.initHeaderView();
+        let footer = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: 10))
+        tableView.tableFooterView = footer;
         
         MZMusicAPIRequest.getAlbumDetail(id: self.albumId) { (detail) in
             if detail != nil {
@@ -113,7 +115,7 @@ class AlbumDetailVC: UIViewController,UITableViewDelegate,UITableViewDataSource 
     }
     
     @objc func songListIntroduce() -> Void {
-        let albumIntroduceVC = AlbumDetailIntroduceVC.init();
+        let albumIntroduceVC = MusicAlbumDetailIntroduceVC.init();
         albumIntroduceVC.albumDetail = self.albumDetail;
         self.navigationController?.pushViewController(albumIntroduceVC, animated: true);
     }
