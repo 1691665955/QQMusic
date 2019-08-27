@@ -17,7 +17,6 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
     var bannerView:MZBannerView!
     var bannerList:[BannerItem]!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white;
@@ -156,14 +155,14 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
         super.viewWillAppear(animated);
         let nav = self.navigationController as! MZNavigationController;
         nav.nameLB.isHidden = false;
-        nav.searchBar.isHidden = false;
+        nav.searchView.isHidden = false;
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated);
         let nav = self.navigationController as! MZNavigationController;
         nav.nameLB.isHidden = true;
-        nav.searchBar.isHidden = true;
+        nav.searchView.isHidden = true;
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -224,5 +223,4 @@ class MusicMainVC: UIViewController,MZBannerViewDelegate,UIScrollViewDelegate,UI
         let itemHeight = (SCREEN_WIDTH-24-20)/3;
         return itemHeight+80;
     }
-    
 }

@@ -8,11 +8,13 @@
 
 import UIKit
 
-class MZNavigationController: UINavigationController,UINavigationControllerDelegate {
+class MZNavigationController: UINavigationController,UINavigationControllerDelegate,UISearchControllerDelegate,UISearchBarDelegate {
 
     var nameLB:UILabel!
-    var searchBar:UISearchBar!
+    var searchView:UIButton!
     var backBtn:UIButton!
+    var searchController:MusicSearchController!
+    var searchResultVC:MusicSearchResultVC!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,28 +29,31 @@ class MZNavigationController: UINavigationController,UINavigationControllerDeleg
     }
     
     func initUI(navigationBar:UINavigationBar) -> Void {
-        let nameLB = UILabel.init(frame: CGRect.init(x: 20, y: 0, width: 100, height: 44))
+        nameLB = UILabel.init(frame: CGRect.init(x: 20, y: 0, width: 100, height: 44))
         nameLB.text = "音乐馆";
         nameLB.font = UIFont.boldSystemFont(ofSize: 24);
         let maxSize = CGSize.init(width: CGFloat(Float.greatestFiniteMagnitude), height: 44);
         let size = nameLB.sizeThatFits(maxSize);
         nameLB.frame = CGRect.init(x: 20, y: 0, width: size.width, height: 44);
         navigationBar.addSubview(nameLB);
-        self.nameLB = nameLB;
         
-        let searchBar = UISearchBar.init(frame: CGRect.init(x: nameLB.frame.maxX+10, y: 8, width: SCREEN_WIDTH-(nameLB.frame.maxX+20), height: 28))
-        searchBar.placeholder = "搜索";
-        navigationBar.addSubview(searchBar);
-        self.searchBar = searchBar;
         
-        let textField = searchBar.value(forKey: "_searchField") as! UITextField;
-        textField.layer.cornerRadius = 14;
-        textField.layer.masksToBounds = true;
-        textField.layer.borderWidth = 0.5;
-        textField.layer.borderColor = RGB(r: 223, g: 223, b: 223).cgColor;
-        textField.font = UIFont.systemFont(ofSize: 16);
+        searchView = UIButton.init(type: .custom);
+        searchView.frame = CGRect.init(x: nameLB.frame.maxX+10, y: 8, width: SCREEN_WIDTH-(nameLB.frame.maxX+30), height: 28);
+        searchView.layer.cornerRadius = 14;
+        searchView.layer.masksToBounds = true;
+        searchView.layer.borderWidth = 0.5;
+        searchView.layer.borderColor = RGB(r: 223, g: 223, b: 223).cgColor;
+        searchView.setImage(UIImage.init(named: "search"), for: .normal);
+        searchView.setTitle("搜索", for: .normal);
+        searchView.setTitleColor(RGB(r: 136, g: 136, b: 136), for: .normal)
+        searchView.titleLabel?.font = .systemFont(ofSize: 12);
+        searchView.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -2, bottom: 0, right: 2);
+        searchView.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 2, bottom: 0, right: -2);
+        searchView.addTarget(self, action: #selector(showSearchController), for: .touchUpInside);
+        navigationBar.addSubview(searchView)
         
-        let backBtn = UIButton.init(type: .custom);
+        backBtn = UIButton.init(type: .custom);
         backBtn.frame = CGRect.init(x: 0, y: 0, width: 50, height: 44);
         backBtn.contentHorizontalAlignment = .left;
         backBtn.contentEdgeInsets = UIEdgeInsets.init(top: 0, left: 12, bottom: 0, right: 0);
@@ -56,7 +61,6 @@ class MZNavigationController: UINavigationController,UINavigationControllerDeleg
         backBtn.addTarget(self, action: #selector(back), for: .touchUpInside);
         backBtn.isHidden = true;
         navigationBar.addSubview(backBtn);
-        self.backBtn = backBtn;
     }
     
     @objc func back() -> Void {
@@ -83,10 +87,45 @@ class MZNavigationController: UINavigationController,UINavigationControllerDeleg
         }
     }
     
+    
+    @objc func showSearchController() -> Void {
+        searchResultVC = MusicSearchResultVC.init();
+        searchController = MusicSearchController.init(searchResultsController: searchResultVC);
+        searchController.delegate = self;
+        searchController.searchResultsUpdater = searchResultVC;
+        searchController.dimsBackgroundDuringPresentation = false;
+        self.definesPresentationContext = true;
+        
+        let searchBar = searchController.searchBar;
+        searchBar.delegate = self;
+        searchBar.backgroundColor = RGB(r: 245, g: 245, b: 245);
+        searchBar.placeholder = "搜索音乐、视频、歌手、专辑、歌单等";
+        searchBar.tintColor = .black;
+    
+        //去除背景
+        searchBar.setBackgroundImage(UIImage.getImageWithColor(color: .white), for: UIBarPosition.any, barMetrics: UIBarMetrics.default)
+        
+        let textField = searchBar.value(forKey: "_searchField") as! UITextField;
+        textField.font = UIFont.systemFont(ofSize: 14);
+        textField.layer.borderWidth = 0.5;
+        textField.layer.borderColor = RGB(r: 223, g: 223, b: 223).cgColor;
+        textField.layer.cornerRadius = 18;
+        textField.layer.masksToBounds = true;
+        textField.tintColor = MainColor;
+        
+        self.present(searchController, animated: true, completion: nil);
+    }
+    
+    // MARK: - UISearchBarDelegate
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchBar.text != nil && searchBar.text!.count > 0 {
+            searchResultVC.keyword = searchBar.text
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
 }

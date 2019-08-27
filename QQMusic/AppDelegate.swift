@@ -21,7 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.frame = UIScreen.main.bounds
         self.window?.makeKeyAndVisible()
         
+        let musicMainVC = MusicMainVC()
+        let nav = MZNavigationController.init(rootViewController: musicMainVC);
         let tabVC = MusicTabbarController()
+        tabVC.addChild(nav)
         self.window?.rootViewController = tabVC
         
         IQKeyboardManager.shared().shouldResignOnTouchOutside = true;

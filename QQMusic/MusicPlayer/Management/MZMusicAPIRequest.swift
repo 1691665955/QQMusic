@@ -110,22 +110,51 @@ class MZMusicAPIRequest: NSObject {
     /// 根据歌名，人名查询歌曲
     ///
     /// - Parameters:
-    ///   - keyword: g搜索关键字
+    ///   - keyword: 搜索关键字
     ///   - type: 搜索类型
     ///   - pageSize: 每页显示的数量
     ///   - page: 页码
     ///   - format: 格式化数据 1:格式化 0:不格式化
     ///   - callback: 接口回调
-    class func searchMusicList(keyword:String,type:String,pageSize:Int,page:Int,format:Int,callback:@escaping ([MusicItem])->Void) {
+    class func searchMusicList(keyword:String,type:String,pageSize:Int,page:Int,format:Int,callback:@escaping ([Any])->Void) {
         self.post(url:"https://v1.itooi.cn/tencent/search",parameters: ["keyword":keyword,"type":type,"pageSize":pageSize,"page":page,"format":format]) { (dic:AnyObject) in
             if((dic.value(forKey: "code") as! Int) < 0) {
                 callback([])
                 return
             } else {
                 if((dic.value(forKey: "code") as! Int) == 200) {
-                    let musicList:NSArray = dic.value(forKey: "data") as! NSArray
-                    let musicArr = [MusicItem].deserialize(from: musicList)
-                    callback(musicArr! as! [MusicItem])
+                    if type == "song" {
+                        let data = dic.value(forKey: "data") as! NSDictionary
+                        let musicList:NSArray = data.value(forKey: "list") as! NSArray
+                        let musicArr = [SongItem].deserialize(from: musicList)
+                        callback(MusicItem.convertSongListToMusicList(songList: musicArr! as! [SongItem]))
+                    } else if type == "singer" {
+                        let data = dic.value(forKey: "data") as! NSDictionary
+                        let song = data.value(forKey: "song") as! NSDictionary
+                        let musicList:NSArray = song.value(forKey: "list") as! NSArray
+                        let musicArr = [SongItem].deserialize(from: musicList)
+                        callback(MusicItem.convertSongListToMusicList(songList: musicArr! as! [SongItem]))
+                    } else if type == "album" {
+                        let data = dic.value(forKey: "data") as! NSDictionary
+                        let albumList:NSArray = data.value(forKey: "list") as! NSArray
+                        let albumArr = [SearchAlbumItem].deserialize(from: albumList)
+                        callback(albumArr! as! [SearchAlbumItem])
+                    } else if type == "songList" {
+                        let data = dic.value(forKey: "data") as! NSDictionary
+                        let songListList:NSArray = data.value(forKey: "list") as! NSArray
+                        let songListArr = [SongListItem].deserialize(from: songListList)
+                        callback(songListArr! as! [SongListItem])
+                    } else if type == "mv" {
+                        let data = dic.value(forKey: "data") as! NSDictionary
+                        let mvList:NSArray = data.value(forKey: "list") as! NSArray
+                        let mvArr = [SearchMVItem].deserialize(from: mvList)
+                        callback(mvArr! as! [SearchMVItem])
+                    } else if type == "lrc" {
+                        let data = dic.value(forKey: "data") as! NSDictionary
+                        let lrcList:NSArray = data.value(forKey: "list") as! NSArray
+                        let lrcArr = [SearchLrcItem].deserialize(from: lrcList)
+                        callback(lrcArr! as! [SearchLrcItem])
+                    }
                 } else {
                     MBProgressHUD.showError(error: dic.value(forKey: "msg") as? String)
                     callback([])

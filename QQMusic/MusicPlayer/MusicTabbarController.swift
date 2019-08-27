@@ -101,11 +101,6 @@ class MusicTabbarController: UITabBarController,MZMusicPlayerManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let musicPlayerVC = MusicMainVC()
-        let nav = MZNavigationController()
-        nav.addChild(musicPlayerVC);
-        self.addChild(nav);
-        
         let playerView:UIView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: SCREEN_WIDTH, height: Tabbar_Height))
         playerView.backgroundColor = UIColor.init(red: 244/255.0, green: 244.0/255.0, blue: 244.0/255.0, alpha: 1)
         self.tabBar.addSubview(playerView)

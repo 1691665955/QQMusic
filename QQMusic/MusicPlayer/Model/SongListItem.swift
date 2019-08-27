@@ -34,6 +34,7 @@ class SongListItem: NSObject,HandyJSON {
     var commit_time:String!
     var version:Int!
     var introduction:String!
+    var song_count:Int!
     var creator:CreatorItem!
     
     
